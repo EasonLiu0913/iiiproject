@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form name="form1" onsubmit="return false;">
+        <input name="age" type="number"><br>
+        <select name="gender">
+            <option value="女">女</option>
+            <option value="男">男</option>
+        </select><br>
+        <button typ="button" onclick="check()">click</button>
+    </form>
+
+    <div id="info"></div>
+
+    <script>
+        let info = document.querySelector('#info');
+
+        function check() {
+            let age = document.form1.age.value * 1;
+            let gender = document.form1.gender.value;
+
+            info.innerHTML = age >= 18 && gender === '女';
+            // console.log("hello");
+        }
+
+    </script>
+</body>
+
+</html>
