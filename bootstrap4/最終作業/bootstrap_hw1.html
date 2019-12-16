@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>練習Carousel拓元售票</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+
+
+
+    <style>
+        .nav-link:hover {
+            color: #fff;
+            background-color: #0071b2;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+
+                <div class="left">
+                    <a class="navbar-brand" href="#"><img class="navbar-brand" src="./images/logo.png" alt="Logo"></a>
+                </div>
+
+                <div class="">
+                    <form class="form-inline mt-2 mt-md-0">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+        <div class="container">
+
+            <nav class="nav nav-pills nav-fill my-3">
+                <a class="nav-item nav-link" href="#">節目資訊</a>
+                <a class="nav-item nav-link" href="#">最新消息</a>
+                <a class="nav-item nav-link" href="#">常見問題</a>
+                <a class="nav-item nav-link" href="#">訂單查詢</a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+    <main role="main">
+        <div class="container">
+            <div class="row ">
+                <div id="myCarousel" class="carousel slide mx-auto" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="./images/19_Jolin_d9c8ba89e41d7175a066a8e673fdfadf.jpg" alt="">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="./images/19_JRI_5299f9a281d1735a23844ca8ed85f090.jpg" alt="">
+
+                        </div>
+                        <div class="carousel-item">
+                            <img src="./images/20_5566_ec4177c6255a1f88504b627a100f224a.jpg" alt="">
+
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container my-4">
+            <div class="row align-items-end py-3">
+                <div class="col-lg-4 my-5">
+                    <img class="rounded-circle" style="width: 140px;margin-left:80px;" src="./images/500.png" alt="">
+                    <h2>伍佰 & China Blue 2019 Rock Star 演唱會-高雄站</h2>
+                    <p>2019年全新登場的ROCK STAR大型巡迴演唱會，伍佰& China
+                        Blue重啟你對搖滾樂的視野與認知。橫跨歷年專輯的曲目，讓你窺見伍佰各時期大膽前衛的風格轉變，以及伍佰之所以成為搖滾巨星的核心力量。
+                    </p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a>
+                    </p>
+                </div>
+                <div class="col-lg-4 my-5">
+
+                    <img class="rounded-circle" style="width: 140px;margin-left:80px;" src="./images/jolin.png" alt="">
+                    <h2>蔡依林 Ugly Beauty 2019-2020 世界巡迴演唱會 台北站</h2>
+                    <p>The FEAST of the Broken Hearts !
+
+                        帶著你曾破碎的心赴約，
+
+                        別讓她嗅到你的恐懼，
+
+                        你的醜陋將壯大她，
+
+                        請一切小心，
+
+                        拎著你的頭，來見我吧 - UGLY BEAUTY，
+
+
+                        ───　蔡依林</p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+                </div>
+                <div class="col-lg-4 my-5">
+                    <img class="rounded-circle" style="width: 140px;margin-left:80px;" src="./images/greenday.png"
+                        alt="">
+                    <h2>GREEN DAY LIVE IN TAIPEI 2020 年輕歲月2020台北演唱會</h2>
+                    <p>以〈American Idiot〉、〈21 Guns〉等經典神曲被譽為龐克教父的 Green Day
+                        (年輕歲月)，讓台灣龐克迷敲碗敲了33年，曾到過日本和香港等地演出，卻總是和台灣擦肩而過的他們，終於要在2020年3月首次來台攻蛋開唱。</p>
+                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+                </div>
+            </div>
+
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <a href="#" style="text-decoration:none">
+                        <h2 class="featurette-heading">Mayday五月天 2020 Just Rock It!!!
+                            BLUE <BR>
+                            <span class="text-muted">歌迷返鄉專車</span></h2>
+                    </a>
+                    <p class="lead">
+                        所有已經售完的回程路線，與加開的B17回程路線南投縣及B18回程路線屏東縣，訂於10/18上午11:00進行車票加開開賣。此次販售由於沒有下架調整，預估所有路線加開數量將在11:00起30分鐘內更新完畢。
+                        這次加開之後若售完，由於現場停車空間有限，後續不保證還能再加開！敬請把握機會！</p>
+                </div>
+                <div class="col-md-5">
+                    <a href="#"><img src="./images/mayday_bus.png" alt=""></a>
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+                <div class="col-md-7 order-md-2">
+                    <a href="#" style="text-decoration:none">
+                        <h2 class="featurette-heading">情歌嶽-遠走高飛 Live <span class="text-muted">
+                                加場確定</span></h2>
+                    </a>
+                    <p class="lead">隨性天生的張震嶽，依自己的步調在創作中前進。
+                        在音樂這條路上，他慢慢地走，卻走到比大多數人都更前面。<BR><BR>
+
+                        情歌嶽-遠走高飛 Live<BR>
+                        演出日期：2019/12/07(六) 19:30 台北Legacy<BR>
+                        售票日期：2019/11/09(六) 上午11:00起全面開賣<BR>
+                        票 價：早鳥票$1680／現場票$1980<BR>
+                        主辦單位：本色音樂<BR>
+                        協辦單位：台灣滾石音樂經紀股份有限公司</p>
+                </div>
+                <div class="col-md-5 order-md-1">
+                    <a href="#"><img src="./images/19_ayalkomod.png" alt=""></a>
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <a href="#" style="text-decoration:none">
+                        <h2 class="featurette-heading">李宗盛 2020《有歌之年》演唱會 - <span class="text-muted">高雄站</span></h2>
+                    </a>
+                    <p class="lead">李宗盛 2020《有歌之年》演唱會，精選李宗盛音樂生涯經典曲目，帶你重回每一首創作的當下，一窺音樂製作歷程，以及音符背後不為人知的故事。<BR><BR>
+                        演出時間：2020/01/18 (六) 18:30<BR>
+                        演出地點：高雄巨蛋(高雄市左營區博愛二路757號)<BR>
+                        票價：NT4800/4200/3200/2800/1800/1200/800<BR>
+                        售票時間：2019/09/08 (日)11:00 拓元售票系統</p>
+                </div>
+                <div class="col-md-5">
+                    <a href="#"><img src="./images/20_Jonathan.png" alt=""></a>
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+
+        </div>
+
+        <footer class="container">
+            <p class="float-right"><a href="#">Back to top</a></p>
+            <p>&copy; tixCraft 版權所有，僅供練習切版之用&middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        </footer>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,1011 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.wrap{
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width:576px){
+    .wrap{
+        max-width:576px;
+    }
+}
+
+a{
+    color: #999;
+    text-decoration: none;
+}
+
+.title{
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 50px;
+    /* border-bottom: 1px solid #ccc; */
+    position: relative;
+}
+
+.title::after{
+    content: '';
+    border-bottom: 3px solid #000;
+    width: 30px;
+    position: absolute;
+    left: calc(50% - 15px);
+    top: 115%;
+}
+
+
+/* header area */
+/* 標題區 */
+.header{
+    display: flex;
+    justify-content: space-between;
+    margin: 8px auto;
+    position: relative;
+}
+
+.header a{
+    font-size: 22px;
+}
+
+/* left side header */
+/* 標題左半部 */
+.left-side-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 600px;
+}
+.left-side-header img{
+    width: 176px;
+    height: 49px;
+}
+
+/* right side header */
+/* 標題右半部 */
+.right-side-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 190px;
+}
+
+.right-side-header-setting-img{
+    width: 39px;
+    height: 26px;
+}
+
+.right-side-header-setting-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 手機版面漢堡選單 */
+.mobile-menu{
+    display: none;
+}
+
+.mobile-menu-container{
+    position: absolute;
+    right: -120px;
+    top: calc(100% + 8px);
+    z-index: 1;
+    background: rgba(0,0,0,.8);
+    transition: .2s;
+    display: none;
+}
+
+.mobile-menu-container a{
+    padding:8px 10px ;
+    display: block;
+}
+
+
+@media screen and (max-width:576px){
+    .left-side-header a{
+        display: none;
+    }
+
+    .left-side-header{
+        display: flex;
+        justify-content: flex-start;
+        margin:5px 20px;
+    }
+    .left-side-header img{
+        width: 176px;
+        height: 49px;
+    }
+    
+    .right-side-header a{
+        display: none;
+    }
+
+    .mobile-menu{
+        display: block;
+    }
+
+    .figure-mobile-menu{
+        width: 50px;
+        height: 50px;
+        margin: 0 10px;
+    }
+
+    .figure-mobile-menu img{
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* banner area */
+
+/* banner top area */
+/* banner上半區域 */
+.banner-top{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background:linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url('../images/unsplash-photo-barbershop.jpg') ;
+    background-size: cover;
+}
+
+.svg{
+    width: 141px;
+    height: 180px;
+    margin-top: 50px;
+
+    background-color: #fff;
+
+    -webkit-mask-image: url(../images/logo_icon_g.svg);
+    mask-image: url(../images/logo_icon_g.svg);
+
+    -webkit-mask-size: cover;
+    mask-size: cover;
+
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
+.banner-top h1{
+    font-size: 48px;
+    color: #fff;
+    margin: 0 auto 17px;
+    text-shadow: 2px 2px 0 #666;
+}
+
+.banner-top h5{
+    font-size: 16px;
+    color: #fff;
+    margin: 0x auto 51px;
+    text-shadow: 2px 2px 0 #666;
+}
+
+/* banner top search area */
+/* banner上半區域內的搜尋欄 */ 
+.serach-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    margin: 51px auto 26px;
+    border: 1px solid pink;
+    background-color: rgba(0,0,0,
+    .3);
+    z-index: 1;
+}
+
+.select-city-list-area{
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+}
+
+
+
+.select-city-list-area img{
+    width: 22px;
+    height: 22px;
+    margin: 5px 5px 5px 10px;
+}
+
+.select-location{
+    width: 70px;
+    color:#fff;
+    position: relative;
+    border-right:1px solid pink;
+    padding-right:10px;
+}
+
+.select-location ul{
+    width:70px; 
+    background:#c6c6c7; 
+    margin-top:2px;
+    border:1px solid #a9c9e2;  
+    position:absolute; 
+    left: -6px;
+    display:none;
+    list-style:none;
+    z-index: 1;
+} 
+
+.select-city-list-area::after{
+    content: " ";
+    border-right:1px solid pink;
+    background-color: transparent;
+}
+
+.select-city-list-area ul li{
+    height:24px; 
+    line-height:24px; 
+    text-indent:10px
+} 
+.select-city-list-area a{
+    display:block;
+    height:24px; 
+    color:#807a62; 
+    text-decoration:none;
+} 
+.select-city-list-area ul li a:hover{
+    background:#c6dbfc; 
+    color:#369
+} 
+
+/* banner上半區域搜尋欄 input部份 */
+.input-search-topic-area{
+    height: 22px;
+    width: 300px;
+}
+
+.input-search-topic-area input{
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    width:auto;
+}
+
+.input-search-topic-area input::placeholder { 
+    color: #fff;
+
+}
+
+/*banner上半區域搜尋欄 搜尋按鈕 */
+.do-search-button-area{
+
+}
+.do-search-button-area a {
+    background-color: #faa;
+    /* cursor: pointer; */
+    width: 80px;
+    height: 22px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-right: 5px;
+}
+
+.searchbar-img{
+    width: 19px;
+    height: 19px;
+    margin: 0;
+    padding: 0;
+}
+
+.searchbar-img img{
+    width: 100%;
+    height: 100%;
+}
+
+
+@media screen and (max-width:576px){
+    .banner-top h1{
+        font-size: 36px;
+    }
+    .serach-area{
+        width: calc(100% - 2px);
+        position: relative;
+        margin-bottom: 40px;
+    }
+    .do-search-button-area a {
+        position: absolute;
+        top:35px;
+        left:0;
+        width: 100%;
+    }
+    .input-search-topic-area{
+        position: relative;
+        left: -10%;
+    }
+}
+
+@media screen and (max-width:550px){
+    .input-search-topic-area{
+        left: -5%;
+    }
+}
+
+
+@media screen and (max-width:460px){
+    .input-search-topic-area{
+        width: 200px;
+    }
+}
+
+@media screen and (max-width:375px){
+    .input-search-topic-area{
+        width: 90px;
+        left: -20%;
+    }
+}
+
+@media screen and (max-width:320px){
+    .input-search-topic-area{
+        width: 70px;
+        left: -18%;
+    }
+}
+
+
+
+
+/* banner below area */
+/* banner下半區域 */
+.banner-below{
+    background-image: url(../icons/bg_icon.png);
+    padding: 10px 0;
+}
+.banner-wrap{
+    max-width: 570px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.banner-icon-area{
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+@media screen and (max-width:576px){
+    .banner-wrap{
+        flex-direction: column;
+        max-width: 80px;
+        text-align: center;
+        margin: 15px auto;
+    }
+    .banner-icon-area{
+        margin: 15px 0;
+    }
+
+}
+
+/* main area */
+
+/* hair style demo area */
+/* 熱門主題區 */
+.hair-style-and-trend-topic-area{
+    margin-top: 50px;
+}
+
+
+.hair-sytle-demo-image-area {
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.hair-style-group{
+    position: relative;
+}
+
+.hair-style-group span{
+    background-color:rgba(255, 255, 255, 0.6);
+    position: absolute;
+    width: 100px;
+    text-align: center;
+    right: -10px;
+    bottom: 10px;
+    padding: 10px;
+    color:rgb(247, 99, 123);
+    border: 1px solid rgb(247, 99, 123);
+    z-index: 1;
+    transition: .5s;
+}
+
+.hair-style-group:hover .hair-style-tilte{
+    right:-20px;
+    background:rgba(33, 33, 33, .6);
+    color: yellow;
+}
+
+.hair-style-demo-img {
+    width: 250px;
+    height: 334px;
+}
+
+.hair-style-demo-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.more-btn{
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.more-btn-a{
+    display: block;
+    text-align: center;
+    color: #fff;
+    background-color: rgb(249, 119, 119);
+    width: 70px;
+    margin:10px 0;
+    padding: 5px 0;
+    font-size: 20px;
+}
+
+.more-btn-a:hover{
+    background-color: red;
+}
+
+
+@media screen and (max-width:615px){
+    .hair-sytle-demo-image-area{
+        max-width:576px;
+    }
+
+    .hair-style-group{
+        width: 190px;
+        margin: auto;
+    }
+    .hair-style-demo-img {
+        width: 180px;
+        height: 250px;
+        margin: 10px;
+    }
+
+    .hair-style-group span{
+        font-size: 12px;
+        width: 60px;
+        padding: 4px 4px;
+        right: 0px;
+    }
+
+    .more-btn{
+        margin-right: 5px;
+    }
+    .more-btn a{
+        font-size: 14px;
+        padding: 5px 0;
+    }
+
+    .hair-style-group:hover .hair-style-tilte{
+        right:0;
+    }
+}
+
+@media screen and (max-width:576px){
+    .hair-sytle-demo-image-area{
+        max-width:576px;
+    }
+
+    .hair-style-group{
+        width: 200px;
+        margin: auto;
+    }
+
+    .hair-style-demo-img {
+        width: 200px;
+        height: 250px;
+        margin: 10px;
+    }
+}
+
+@media screen and (max-width:400px){
+
+    .hair-style-group{
+        width: 150px;
+        margin: auto;
+    }
+
+    .hair-style-demo-img {
+        width: 200px;
+        height: 250px;
+        margin: 10px;
+    }
+}
+
+@media screen and (max-width:380px){
+    .hair-style-group{
+        width: 160px;
+        margin: auto;
+    }
+
+    .hair-style-demo-img {
+        width: 150px;
+        height: 250px;
+        margin: 10px;
+    }
+
+    .hair-style-group:hover .hair-style-tilte{
+        right:0;
+    }
+
+    .more-btn{
+        margin-right: 10px;
+    }
+
+}
+
+/* trend topic area */
+/* 趨勢話題區 */
+.trend-topic-img-area{
+    max-width: 1300px;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.trand-topic-figure {
+    display: block;
+    width: 400px;
+    height: 300px;
+}
+
+.trand-topic-figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.trend-topic-group{
+    position: relative;
+    background-color: #000;
+}
+
+.trend-topic-group img{
+    opacity: .5;
+}
+
+.trend-topic-group:hover .trand-topic-img{
+    opacity: .8;
+}
+
+.trend-topic-group span{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    width: 100%;
+    text-align: center; 
+    color: #fff;
+    font-size: 20px;
+    text-shadow: 2px 2px #2c3035;
+    transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width:1200px){
+    .trend-topic-img-area{
+        flex-direction: column;
+    }
+
+    .trend-topic-group {
+        margin: 5px;
+    }
+
+    .trand-topic-figure{
+        display: block;
+        width: 100%;
+    }
+}
+
+
+/* footer area */
+/* app download area in footer*/
+/* app下載介紹區 */
+.app-download-area{
+    margin-top: 50px;
+    background-color: #ccc;
+}
+
+.app-wrap{
+    display: flex;
+    justify-content: center;
+}
+
+.app-download-right-side{
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+}
+
+
+
+.app-download-right-side .title{
+    font-size: 36px;
+}
+
+
+.download-subtitle{
+    color:rgb(245, 145, 162);
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.app-download-appstore-imgs{
+    display: flex;
+    margin: 0 auto;
+}
+.app-download-appstore-img-ios{
+    background-image: url(../icons/btn_app_ios.png);
+    width: 135px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.app-download-appstore-img-ios:hover{
+    background-image: url(../icons/btn_app_ios_h.png);
+}
+
+.app-download-appstore-img-android{
+    background-image: url(../icons/btn_app_android.png);
+    width: 135px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.app-download-appstore-img-android:hover{
+    background-image: url(../icons/btn_app_android_h.png);
+
+}
+
+
+@media screen and (max-width:576px){
+    .app-download-area .mobile-img img{
+        height: 200px;
+    }
+    .app-download-right-side{
+        margin-top: 30px;
+        align-items: center;
+    }
+
+    .app-download-right-side .title{
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .download-subtitle{
+        display: none;
+    }
+
+    .app-download-appstore-imgs{
+        width: 130px;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+/* designer recruiting area of footer */
+/* 設計師招募欄位 */
+.designer-recruiting-area{
+    position: relative;
+    overflow: hidden;
+}
+
+/* 設計師招募欄位背景 */
+
+.blur-background-here{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-image: url(../images/long-hair.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    filter: blur(2px);
+    opacity: .6;
+    position: absolute;
+    top: -2px;
+    z-index: -1;
+}
+
+/* 設計師招募欄位上層數字部份 */
+.top-recruiting{
+    width: 450px;
+    display: flex;
+    margin: auto;
+    padding-top: 20px;
+}
+
+.top-recruiting .title1{
+    color: #fff;
+    font-size: 18px;
+}
+
+.top-recruiting .number{
+    color: #fff;
+    font-size: 80px;
+}
+
+
+.now-designer-number-area,.publiced-number-area{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dotted-line{
+    margin: 20px;
+    padding: 30px;
+    border-right: 3px dotted #ccc;
+}
+
+.publiced-number-area{
+    margin-left: 60px;
+}
+
+@media screen and (max-width:576px){
+    .top-recruiting{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .dotted-line{
+        display: none;
+    }
+
+    .publiced-number-area{
+        margin: 30px 0;
+    }
+
+}
+
+/* 設計師招募欄位下層標題與連結按鈕 */
+.below-recruiting{
+    width: 600px;
+    display: flex;
+    margin: 40px auto;
+    justify-content: space-evenly;
+    
+}
+
+.below-recruiting .title{
+    color:#fff;
+    font-size: 28px;
+}
+
+.below-recruiting .title::after{
+    border-color:#fff;
+}
+
+.below-recruiting-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-grow: 1;
+}
+
+.below-recruiting-buttons-a{
+    display: block;
+    color: #000;
+    background-color: #ccc;
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    padding-top: 10px;
+    opacity: .4;
+}
+
+.below-recruiting-buttons-a:hover{
+    background-color: #333;
+    color: #fff;
+}
+
+@media screen and (max-width:576px){
+    .below-recruiting{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .below-recruiting-buttons{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-bottom:40px ;
+    }
+
+    .below-recruiting-buttons a{
+        width: 40%;
+        background-color:#999;
+    }
+
+}
+
+
+/* info area of footer*/
+/* 下方資訊欄位/icon/設計師加入按鈕 */
+.bottom-info-area{
+    background-color: rgb(228, 228, 228);
+    margin-top: -50px;
+    padding: 30px 0 0 0;
+}
+
+.bottom-info-wrap{
+    display: flex;
+    max-width: 1300px;
+    margin:auto ;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+.info-text-area{
+    display: flex;
+    width: 480px;
+}
+
+.info-text-area img{
+    width: 6%;
+    margin-right: 10px;
+}
+
+.info-text-area span{
+    color:#999;
+}
+
+.contact-us-area{
+    width: 246px;
+    display: flex;
+    flex-wrap: wrap;
+    margin:0 30px 0 20px;
+}
+
+.contact-us-area span{
+    color:#999;
+}
+
+.contact-icons{
+    display: flex;
+    align-items: center;
+    margin: 5px 10px;
+    cursor: pointer;
+}
+
+.contact-icons img{
+    margin-right: 10px;
+}
+
+/* 底部的設計師加入按鈕 */
+.join-designer-button{
+    width: 150px;
+    display: flex;
+    border: 1px solid rgb(202, 82, 102);
+    align-items: center;
+    cursor: pointer;
+
+}
+
+
+/* 利用切割範圍來製作按鈕icon */
+.designer-join-icon-size{
+    width: 30px;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+    margin: 10px;
+}
+
+/* 放入按鈕icon */
+.designer-join-icon{
+    position: absolute;
+    left: -14px;
+    top: -10px;
+    width: 200%;
+    height: 200%;
+    background-image: url(../icons/btn_join.png);
+}
+
+/* 按鈕文字 */
+.join-designer-span{
+    color: rgb(202, 82, 102);
+    font-weight: bold;
+}
+
+/* 按鈕hover動態效果 */
+.join-designer-button:hover{
+    border: 1px solid #E89AAF;
+}
+
+.join-designer-button:hover .designer-join-icon{
+    background-image: url(../icons/btn_join_h.png);
+}
+
+.join-designer-button:hover .join-designer-span{
+    color: #E89AAF;
+}
+
+
+@media screen and (max-width:576px){
+    .bottom-info-wrap{
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+    .bottom-info-wrap{
+        font-size: 10px;
+    }
+
+    .info-text-area{
+        display: flex;
+        width: 100%;
+    }
+
+    .info-text-area img{
+        margin: 0 4px;
+    }
+
+    .contact-us-area{
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .contact-us-area .contact-icons{
+        width: 45%;
+    }
+    
+
+    .bottom-info-wrap{
+        position: relative;
+    }
+
+    .join-designer-button{
+        position: absolute;
+        left: 5%;
+        bottom: -40px;
+        width: 90%;
+        border: 1px solid rgb(202, 82, 102);
+        align-items: center;
+        justify-content: center;
+    }
+
+}
+
+@media screen and (max-width:460px){
+    .contact-us-area .contact-icons{
+        width: 40%;
+    }
+}
+
+/* 版權宣告欄位 */
+.bottom-copyright-area{
+    max-width: 1300px;
+    text-align: center;
+    margin: 50px auto 0 ;
+    padding: 20px 0;
+    border-top: 1px solid #ccc;
+    color: #999;
+}
+
+@media screen and (max-width:480px){
+    .bottom-copyright-area{
+        font-size: 10px;
+        max-width: 200px;
+    }
+
+}

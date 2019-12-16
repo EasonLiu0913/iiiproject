@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Practice</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <style>
+        .clearfix::after {
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: "";
+            clear: both;
+            height: 0;
+        }
+
+        .wrapper {
+            width: 960px;
+            margin: 20px auto;
+        }
+
+        header h1,
+        header h5 {
+            color: #aaa;
+        }
+
+        header nav {
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+            margin: 20px 0 25px 0;
+        }
+
+        header nav ol li {
+            float: left;
+            padding: 5px 20px 5px 0px;
+        }
+
+        header nav ol li a {
+            text-decoration: none;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        header nav ol li a:hover {
+            text-decoration: none;
+            font-size: 14px;
+            color: rgb(250, 136, 43);
+        }
+
+        header img {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        header img:hover {
+            border: 1px solid rgb(252, 161, 42)
+        }
+
+        .main {
+            margin: 20px 0px 0 0;
+        }
+
+        .artical {
+            width: 640px;
+            float: left;
+            padding: 0 60px 0 0;
+        }
+
+        .artical h1 {
+            color: #888;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .artical p {
+            font-size: 14px;
+            margin: 15px 0;
+            color: #888;
+        }
+
+        .detail {
+            width: 100%;
+            margin: 20px 0;
+
+        }
+
+        .detail img {
+            float: left;
+            padding: 5px;
+            margin: 0 30px 10px 0;
+            border: 1px solid #000;
+        }
+
+        .detail h3 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #888;
+        }
+
+        .read-more a {
+            text-decoration: none;
+            color: rgb(238, 158, 9);
+            font-size: 14px;
+            float: right;
+            font-weight: bold;
+        }
+
+        .read-more a::after {
+            content: "»";
+        }
+
+        .aside {
+            width: 260px;
+            float: right;
+        }
+
+        .categories h2 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #999;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #aaa;
+        }
+
+        .categories nav span {
+            font-size: 12px;
+        }
+
+        .categories nav ol li {
+            border-bottom: 1px dashed #000;
+        }
+
+        .categories nav ol li a {
+            display: block;
+            text-decoration: none;
+            line-height: 28px;
+            color: #666;
+            font-size: 14px;
+            padding: 0 0 0 20px;
+            ;
+            background: url("images/orange_file.gif") no-repeat 10px center #FFFFFF;
+
+        }
+
+        .categories nav ol li a:hover {
+            display: block;
+            text-decoration: none;
+            line-height: 28px;
+            color: rgb(241, 123, 12);
+            font-size: 14px;
+            padding: 0 0 0 20px;
+            ;
+            background: url("images/orange_file.gif") no-repeat 10px center #FFFFFF;
+
+        }
+
+        .get-in-contact {
+            margin: 30px 0;
+        }
+
+        .get-in-contact .title {
+            font-weight: bold;
+            color: #888;
+        }
+
+        .get-in-contact ul li {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .get-in-contact ul li a {
+            color: orange;
+            text-decoration: none;
+        }
+
+        footer {
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+
+        footer span {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .author {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>Basic 73</h1>
+            <h5>free HTML5 Website Template</h5>
+
+            <nav>
+                <ol class="clearfix">
+                    <li><a href="#">TEXT LINK</a></li>
+                    <li><a href="#">TEXT LINK</a></li>
+                    <li><a href="#">TEXT LINK</a></li>
+                    <li><a href="#">TEXT LINK</a></li>
+                    <li><a href="#">TEXT LINK</a></li>
+                </ol>
+
+            </nav>
+
+
+            <a href="">
+                <img src="https://fakeimg.pl/940x360/">
+            </a>
+
+
+        </header>
+
+        <div class="main clearfix">
+            <div class="artical">
+                <h1>HEADLINE COLOUR AND SIZE ARE ALL THE SAME</h1>
+                <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid exercitationem quae praesentium
+                    tempore incidunt officia, consequuntur optio accusamus id autem ducimus odio! Perferendis quo quod
+                    quaerat possimus eveniet deleniti dolor.</P>
+                <P>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus eos numquam officiis cupiditate
+                    ratione, tempore eum officia similique sit neque deleniti iure commodi aliquam. Nisi ipsum illo
+                    dolore reprehenderit natus!</P>
+
+
+                <div class="detail clearfix">
+                    <img src="https://fakeimg.pl/180x150/">
+                    <h3>INDONECTETUS FACILIS LEO NIBH</h3>
+                    <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, iusto sunt! Commodi nisi sit quas,
+                        tenetur, inventore aut atque facere, reprehenderit aliquid incidunt magnam. Accusamus, ea vero.
+                        Officiis, animi quos.</P>
+                    <div class="read-more"> <a href="#">READ MORE</a> </div>
+                </div>
+
+                <div class="detail clearfix">
+                    <img src="https://fakeimg.pl/180x150">
+                    <h3>INDONECTETUS FACILIS LEO NIBH</h3>
+                    <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, iusto sunt! Commodi nisi sit quas,
+                        tenetur, inventore aut atque facere, reprehenderit aliquid incidunt magnam. Accusamus, ea vero.
+                        Officiis, animi quos.</P>
+                    <div class="read-more"> <a href="#">READ MORE</a> </div>
+                </div>
+            </div>
+            <div class="aside">
+                <div class="categories">
+                    <h2>CATEGORIES</h2>
+
+                    <nav>
+                        <ol>
+                            <li>
+                                <a href="#">Free Website Templates</a>
+                            </li>
+                            <li>
+                                <a href="#">Free CSS Templates</a>
+                            </li>
+                            <li>
+                                <a href="#">Free XHTML Templates</a>
+                            </li>
+                            <li>
+                                <a href="#">Free Web Templates</a>
+                            </li>
+                            <li>
+                                <a href="#">Free Website Layouts</a>
+                            </li>
+                            <li>
+                                <a href="#">Free HTML5 Templates</a>
+                            </li>
+                            <li>
+                                <a href="#">Free Webdesign Templates</a>
+                            </li>
+                            <li>
+                                <a href="#">Free Fireworks Templates</a>
+                            </li>
+                            <li>
+                                <a href="#">Free PNG Templates</a>
+                            </li>
+                            <li>
+                                <a href="#">Free Website Themes</a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <div class="get-in-contact">
+                    <sapn class="title">GET IN CONTACT</sapn>
+                    <hr>
+                    <ul>
+                        <li>Full Name</li>
+                        <li>Address Line 1</li>
+                        <li>Address Line 2</li>
+                        <li>Town/City</li>
+                        <li>Postcode/Zip</li>
+                        <br>
+                        <li>Tel:xxx xxx xxxxx</li>
+                        <li>Email:<a href="mailto:contact@domain.com">contact@domain.com</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer>
+
+            <span>Copyright © 2018 - All Rights Reserved - Domain Name</span>
+            <span class="author">Template by OS Templates</span>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
