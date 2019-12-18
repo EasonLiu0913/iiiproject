@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Score</title>
+</head>
+
+<body>
+    <input type="number" ID="myinput" onkeyup="doConvert()">
+    <div id="info"></div>
+
+    <script>
+        const myinput = document.querySelector('#myinput');
+        const info = document.querySelector('#info');
+
+        function doConvert() {
+            let scoreValue = myinput.value * 1;
+            let grade = "";
+
+            if (scoreValue < 0 || scoreValue > 100) {
+                info.innerHTML = "超出分數範圍 0～100";
+                return;
+            }
+
+            if (scoreValue > 90) {
+                grade = "A";
+            }
+            else if (scoreValue > 80) {
+                grade = "B";
+            }
+            else if (scoreValue > 70) {
+                grade = "C";
+            }
+            else if (scoreValue > 60) {
+                grade = "D";
+            }
+            else {
+                grade = "F";
+            }
+
+            info.innerHTML = grade;
+        }
+    </script>
+</body>
+
+</html>
