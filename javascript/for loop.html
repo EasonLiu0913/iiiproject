@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Score</title>
+</head>
+
+<body>
+
+    <div id="info"></div>
+
+    <script>
+        const info = document.querySelector('#info');
+        // 題目1：做出1～10的顯示
+        for (var i = 0; i < 10; i++) {
+            info.innerHTML += i + 1 + ',';
+        }
+
+        //換行
+        info.innerHTML += "<br>"
+
+        // 題目2：做出33,35,37....57的顯示
+        for (var i = 33; i < 58; i += 2) {
+            info.innerHTML += i + ',';
+        }
+        //換行
+        info.innerHTML += "<br>"
+
+        // 題目3：做出10～1的顯示
+        for (var i = 0; i < 10; i++) {
+            info.innerHTML += 10 - i + ',';
+        }
+        //換行
+        info.innerHTML += "<br>"
+
+    </script>
+</body>
+
+</html>
