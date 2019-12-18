@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>For loop creat element</title>
+    <style>
+        #rect {
+            position: relative;
+            width: 800px;
+            height: 300px;
+            background-color: #b0e9ff;
+        }
+
+        .ball {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #ff2f27;
+            border-radius: 50%;
+            color: #fff;
+            line-height: 40px;
+            text-align: center;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="rect"></div>
+    <button onclick="show()">SHOW</button>
+
+    <script>
+        const rect = document.querySelector('#rect');
+        let temp, i;
+        let str = '一隻穿雲箭千軍萬馬來相見'
+
+        for (i = 0; i < str.length; i++) {
+            temp = document.createElement('div');
+            temp.className = 'ball';
+            temp.innerHTML = str[i];
+            temp.style.left = 50 + 60 * i + 'px';
+            temp.style.top = '100px';
+            temp.style.backgroundColor = `rgba(${150 + i * 10},${10 + i * 10},${200 + i * 3},1)`;
+            temp.style.transition = i * .5 + 's';
+            rect.appendChild(temp);
+
+        }
+
+
+        function show() {
+            let balls = document.querySelectorAll('.ball');
+            for (i = 0; i < balls.length; i++) {
+                balls[i].style.opacity = 1;
+            }
+        }
+    </script>
+</body>
+
+</html>
