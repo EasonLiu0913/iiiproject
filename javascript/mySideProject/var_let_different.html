@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        //example1 setTimeout problem.
+        for (var i = 0; i < 4; i++) {
+
+            setTimeout(function () {
+                console.log(i);
+
+            }, 1000);
+        }
+
+        //example2 auto var x for u.
+        {
+            console.log(x);
+            x = 20;
+        }
+
+
+
+
+        //example3 withoutDeclare will go global
+        (function exampple3() {
+            let t = 155;
+
+            (function inside() {
+                withoutDeclare = 222;
+                console.log("got t=" + t);
+            }());
+
+            console.log("outside =" + withoutDeclare);
+        }());
+
+        console.log("outside^2 =" + withoutDeclare);
+
+    </script>
+
+</body>
+
+</html>
