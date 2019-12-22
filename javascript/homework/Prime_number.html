@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>質數作業-14號-劉國良</title>
+
+    <style>
+        #info {
+            width: 100％;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <label for="">請輸入質數判斷範圍：</label>
+    <input id="userInput" type="number" value="100000">
+    <button onclick="checkIfPrime()">開始</button>
+    <div id="info"></div>
+
+    <script>
+        const maxNumber = document.querySelector("#userInput");
+
+        function checkIfPrime() {
+            let startTime = new Date().getTime();
+            let info = document.querySelector('#info');
+            info.innerHTML = "";
+            let i, j, prime = [];
+
+            //方法一 土法煉鋼，速度約 2800 毫秒 ～ 3000 毫秒左右
+            // for (i = 2; i <= maxNumber.value * 1; i++) {
+            //     for (j = 2; j <= i; j++) {
+            //         if (i % j == 0 && i == j) {
+            //             prime.push(i);
+            //         }
+            //         else if (i % j == 0 && i !== j) {
+            //             break;
+            //         }
+            //     }
+            // }
+
+            //方法2 使用數學特性 判斷只做到根號 n 即可停止，速度約50～70毫秒左右
+            for (i = 2; i <= maxNumber.value * 1; i++) {
+                for (j = 2; j <= i; j++) {
+                    if (i % j == 0 && i !== j) {
+                        //如果i被任意j整除，則不可能是質數，跳出迴圈
+                        break;
+                    }
+                    else if (j > parseInt(Math.sqrt(i))) {
+                        //如果迴圈判斷到根號i都還沒找到可整除之數字，則可判定為質數，並加入prime陣列。
+                        prime.push(i);
+                        break;
+                    }
+                }
+            }
+
+            //使用老師在班版建議的方法，在網頁印出執行結果
+            info.innerHTML += '花費時間：' + (new Date().getTime() - startTime) + '毫秒<br>' + '陣列長度：' + prime.length + "<br><br> 質數陣列:[" + prime + "]";
+        }
+
+
+
+    </script>
+</body>
+
+</html>
