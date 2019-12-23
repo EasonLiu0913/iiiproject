@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Context</title>
+</head>
+
+<body>
+
+    <div id="rect">
+    </div>
+
+    <button id="btn">click</button>
+
+    <script>
+        let rect = document.querySelector('#rect');
+
+
+        function f1() {
+            console.log(this); // context
+            console.log(self);
+            console.log('----');
+        }
+
+        f1();
+
+        document.querySelector('#btn').onclick = f1;
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Context-2</title>
+</head>
+
+<body>
+
+    <div id="rect">
+    </div>
+
+    <script>
+        let rect = document.querySelector('#rect');
+
+        const myObj = {
+            a: 12,
+            b: 3,
+            f1: function () {
+                console.log('f1 ----');
+                console.log(this);
+                console.log(this.a * this.b);
+            },
+            f2: () => {
+                console.log('f2 ----');
+                console.log(this);
+                console.log(this.a * this.b);
+            },
+            f3() {
+                console.log('f3 ----');
+                console.log(this);
+                console.log(this.a * this.b);
+            },
+        };
+
+        const obj2 = {
+            a: 5, b: 7
+        };
+
+
+
+        myObj.f1();
+        myObj.f2();
+        myObj.f3();
+
+        myObj.f1.apply(obj2);
+        myObj.f2.apply(obj2);
+        myObj.f3.apply(obj2);
+
+    </script>
+</body>
+
+</html>
