@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>shallow copy</title>
+</head>
+
+<body>
+    <div id="rect"></div>
+
+    <script>
+        const rect = document.querySelector('#rect');
+
+        const ar = [12, 99, 'aaa', { name: 'bill', age: 25, gender: 'male' }];
+        const br = ar;
+        const cr = ar.slice();
+
+        //修改第三個元素裡的name屬性
+        ar[3].name = 'flora';
+        //修改第一個數字
+        ar[0] = 100;
+
+        //結果 br 全跟著 ar 改變
+        //cr 陣列的第一個數字不變，但 name 改成 flora.
+        rect.innerHTML += 'ar:' + JSON.stringify(ar) + '<br>';
+        rect.innerHTML += 'br:' + JSON.stringify(br) + '<br>';
+        rect.innerHTML += 'cr:' + JSON.stringify(cr) + '<br>';
+
+    </script>
+
+</body>
+
+</html>
