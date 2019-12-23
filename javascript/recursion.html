@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Recursion</title>
+</head>
+
+<body>
+
+    <div id="rect">
+    </div>
+
+    <script>
+        let rect = document.querySelector('#rect');
+
+        // 遞迴: 自己呼叫自己
+        function f(n) {
+            if (n === 1) return 1;
+            return n * f(n - 1);
+        }
+
+        //求6的階乘
+        rect.innerHTML += f(6) + '<br>';
+
+
+    </script>
+</body>
+
+</html>
