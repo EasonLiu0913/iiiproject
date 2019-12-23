@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>For loop creat element</title>
+    <style>
+        #rect {
+            position: relative;
+            width: 800px;
+            height: 800px;
+            background-color: #b0e9ff;
+        }
+
+        .ball {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #ff2f27;
+            border-radius: 50%;
+            color: #fff;
+            line-height: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="rect"></div>
+
+    <script>
+        const rect = document.querySelector('#rect');
+        let temp, i, k, num;
+        num = 0;
+        for (k = 0; k < 10; k++)
+            for (i = 0; i < 8; i++) {
+                temp = document.createElement('div');
+                temp.className = 'ball';
+                num += 1;
+                temp.innerHTML = num;
+                temp.style.left = 50 + 60 * i + 'px';
+                temp.style.top = 50 + 40 * k + 'px';
+                temp.style.backgroundColor = `rgba(${150 + i * 10},${10 + i * 10},${200 + i * 3},1)`;
+                rect.appendChild(temp);
+            }
+
+
+    </script>
+</body>
+
+</html>
