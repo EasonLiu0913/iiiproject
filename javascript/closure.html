@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="rect">
+    </div>
+
+    <script>
+        let rect = document.querySelector('#rect');
+
+
+        const f = (function () {
+            let n = 5;
+            return function (a = 1) {
+                console.log("n=" + n);
+                if (n) {
+                    n--;
+                    return n * a;
+                } else {
+                    return '禁止再呼叫';
+                }
+            };
+        })();
+
+        //每次呼叫, n 會隨著裡面改變而得到不同答案
+        rect.innerHTML += f(6) + '<br>';
+        rect.innerHTML += f(6) + '<br>';
+        rect.innerHTML += f(6) + '<br>';
+        rect.innerHTML += f(6) + '<br>';
+        rect.innerHTML += f(6) + '<br>';
+        rect.innerHTML += f(6) + '<br>';
+
+    </script>
+</body>
+
+</html>

@@ -17,9 +17,7 @@
     <script>
         let rect = document.querySelector('#rect');
 
-        rect.innerHTML += '1<br>';
-        rect.innerHTML += '2<br>';
-
+        //不想要變數變成全域變數的時候可使用匿名函式
         (function () {
             rect.innerHTML += '1<br>';
         })();
