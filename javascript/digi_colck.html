@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Digi Clock</title>
+</head>
+
+<body>
+    <div id="rect" style="font-size: 80px;"></div>
+
+    <script>
+        const rect = document.querySelector('#rect');
+
+        function startClocking() {
+            const d = new Date;
+            rect.innerHTML = d.toString().split(' ')[4];
+            setTimeout(startClocking, 1000);
+        }
+
+        startClocking();
+
+
+    </script>
+</body>
+
+</html>
