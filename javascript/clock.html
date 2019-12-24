@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>clock</title>
+    <style>
+        .clock {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            background-color: #143d38;
+            border: 1px solid black;
+            border-radius: 50%;
+        }
+
+        .hand {
+            position: absolute;
+            left: 300px;
+            top: 300px;
+        }
+
+        .hand-hour {
+            position: absolute;
+            width: 14px;
+            height: 180px;
+            background-color: #bb25f7;
+            border-radius: 10px;
+            left: -7px;
+            top: -173px;
+        }
+
+        .hand-min {
+            position: absolute;
+            width: 10px;
+            height: 250px;
+            background-color: #e1f14f;
+            border-radius: 5px;
+            left: -5px;
+            top: -245px;
+        }
+
+        .hand-sec {
+            position: absolute;
+            width: 6px;
+            height: 300px;
+            background-color: #ff1916;
+            border-radius: 3px;
+            left: -3px;
+            top: -297px;
+            transition: .3s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock">
+        <div class="hand">
+            <div class="hand-hour"></div>
+        </div>
+        <div class="hand">
+            <div class="hand-min"></div>
+        </div>
+        <div class="hand">
+            <div class="hand-sec"></div>
+        </div>
+    </div>
+
+    <script>
+        const hands = document.querySelectorAll('.hand');
+
+        const runClock = () => {
+            const now = new Date;
+            const ms = now.getMilliseconds();
+            const s = now.getSeconds();
+            const m = now.getMinutes();
+            const h = now.getHours();
+            //增加補時的角度，讓指針移動變平滑化
+            hands[0].style.transform = `rotate(${h * 30 + 0.5 * m}deg)`;
+            hands[1].style.transform = `rotate(${m * 6 + 0.1 * s}deg)`;
+            hands[2].style.transform = `rotate(${s * 6 + 0.006 * ms}deg)`;
+            setTimeout(runClock, 30);
+        };
+
+        runClock();
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
