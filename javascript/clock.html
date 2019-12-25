@@ -27,7 +27,7 @@
             position: absolute;
             width: 14px;
             height: 180px;
-            background-color: #bb25f7;
+            background-color: #7d138b;
             border-radius: 10px;
             left: -7px;
             top: -173px;
@@ -37,7 +37,7 @@
             position: absolute;
             width: 10px;
             height: 250px;
-            background-color: #e1f14f;
+            background-color: #f5af3f;
             border-radius: 5px;
             left: -5px;
             top: -245px;
@@ -47,30 +47,74 @@
             position: absolute;
             width: 6px;
             height: 300px;
-            background-color: #ff1916;
+            background-color: #3ab7ff;
             border-radius: 3px;
             left: -3px;
             top: -297px;
             transition: .3s;
+        }
+
+        .scale-container {
+            position: absolute;
+            left: 300px;
+            top: 300px;
+        }
+
+        .scale-rotater {
+            position: absolute;
+        }
+
+        .scale {
+            position: absolute;
+            width: 2px;
+            height: 10px;
+            background-color: #ffffff;
+            border-radius: 1px;
+            left: -1px;
+            top: -300px;
+        }
+
+        .scale-5min {
+            height: 15px;
+            background-color: #ff6060;
         }
     </style>
 </head>
 
 <body>
     <div class="clock">
-        <div class="hand">
-            <div class="hand-hour"></div>
+        <div class="scale-container">
         </div>
-        <div class="hand">
-            <div class="hand-min"></div>
-        </div>
-        <div class="hand">
-            <div class="hand-sec"></div>
-        </div>
+    </div>
+    <div class="hand">
+        <div class="hand-hour"></div>
+    </div>
+    <div class="hand">
+        <div class="hand-min"></div>
+    </div>
+    <div class="hand">
+        <div class="hand-sec"></div>
+    </div>
     </div>
 
     <script>
         const hands = document.querySelectorAll('.hand');
+        const scaleContainer = document.querySelector('.scale-container')
+        let el;
+
+        for (let i = 0; i < 60; i++) {
+            el = document.createElement('div');
+            el.className = 'scale-rotater';
+            if (i % 5 === 0) {
+                el.innerHTML = `<div class="scale scale-5min"></div>`;
+            }
+            else {
+                el.innerHTML = `<div class="scale"></div>`;
+            }
+
+            el.style.transform = `rotate(${i * 6}deg)`
+            scaleContainer.appendChild(el);
+        }
 
         const runClock = () => {
             const now = new Date;
