@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #c7fff8;
+        }
+
+        .ball {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #ff1916;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            left: 50px;
+            top: 100px;
+            transition: .3s;
+            transition-timing-function: cubic-bezier(0, .69, .43, 1.16);
+        }
+
+        .ball-btn {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #76a5ff;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            left: 375px;
+            top: 275px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="rect">
+        <div class="ball-btn"></div>
+    </div>
+
+    <script>
+        let rect = document.querySelector('#rect');
+        let btn = document.querySelector('.ball-btn');
+        let isOpened = false; // 一開始是收合
+        const myBalls = [];
+
+        const ballNum = 12;
+        const angUnit = Math.PI * 2 / ballNum;
+        let i, b, x, y;
+
+        for (i = 0; i < ballNum; i++) {
+            b = document.createElement('div');
+            b.className = 'ball';
+            b.innerHTML = i;
+            x = 400 - 15 + Math.cos(angUnit * i) * 250;
+            y = 300 - 15 + Math.sin(angUnit * i) * 250;
+            b.style.left = '385px';
+            b.style.top = '285px';
+            rect.appendChild(b);
+
+            myBalls.push({
+                el: b,
+                openX: Math.round(x),
+                openY: Math.round(y),
+                closeX: 385,
+                closeY: 285,
+            });
+        }
+        rect.appendChild(btn);
+
+        const balls = document.querySelectorAll('.ball');
+
+        btn.onclick = function () {
+            isOpened = !isOpened;
+
+            myBalls.forEach((obj, i) => {
+                let x, y;
+                if (isOpened) {
+                    x = obj.openX;
+                    y = obj.openY;
+                } else {
+                    x = obj.closeX;
+                    y = obj.closeY;
+                }
+                setTimeout(function () {
+                    obj.el.style.left = x + 'px';
+                    obj.el.style.top = y + 'px';
+                }, 100 * i);
+            })
+
+        };
+    </script>
+</body>
+
+</html>
