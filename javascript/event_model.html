@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #b0e9ff;
+        }
+
+        .small-ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #e2f345;
+            border-radius: 50%;
+            left: 8px;
+            top: 8px;
+        }
+
+        .ball {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #ff2f27;
+            border-radius: 50%;
+            left: 50px;
+            top: 50px;
+        }
+
+        .big-ball {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background-color: #2c47ff;
+            border-radius: 50%;
+            left: 360px;
+            top: 260px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="rect">
+        <div class="big-ball">
+            <div class="ball">
+                <div class="small-ball"></div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        const rect = document.querySelector('#rect');
+        const bb = document.querySelector('.big-ball');
+        const b = document.querySelector('.ball');
+        const sb = document.querySelector('.small-ball');
+
+        const handler = event => {
+            console.log('event.currentTarget:', event.currentTarget);
+            console.log('event.currentTarget:', event.currentTarget);
+            console.log('event.target:', event.target);
+            console.log('event.eventPhase:', event.eventPhase);
+        };
+
+
+        rect.addEventListener('click', event => {
+            console.log('1:', event.eventPhase, event.currentTarget, event.target);
+
+        }, true);
+        bb.addEventListener('click', event => {
+
+            console.log('2:', event.eventPhase, event.currentTarget, event.target);
+
+        }, true);
+
+        b.addEventListener('click', event => {
+            console.log('3:', event.eventPhase, event.currentTarget, event.target);
+            event.stopPropagation();//阻斷點
+        }, true);
+
+        sb.addEventListener('click', event => {
+            console.log('4:', event.eventPhase, event.currentTarget, event.target);
+
+        }, true);
+
+        sb.addEventListener('click', event => {
+            console.log('5:', event.eventPhase, event.currentTarget, event.target);
+
+        });
+
+
+        b.addEventListener('click', event => {
+            console.log('6:', event.eventPhase, event.currentTarget, event.target);
+
+        });
+
+        bb.addEventListener('click', event => {
+            console.log('7:', event.eventPhase, event.currentTarget, event.target);
+
+        });
+
+        rect.addEventListener('click', event => {
+            console.log('8:', event.eventPhase, event.currentTarget, event.target);
+
+        });
+
+
+
+    </script>
+</body>
+
+</html>
