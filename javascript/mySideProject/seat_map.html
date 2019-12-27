@@ -31,7 +31,10 @@
 <body>
     <label for="">排數：</label><input class="rows" type="number" placeholder="請輸入排數"><BR>
     <label for="">列數：</label><input class="columns" type="number" placeholder="請輸入列數">
-    <button onclick="creatSeats()">產生座位表</button><BR>
+    <button onclick="creatSeats()">產生座位表</button>
+    <button onclick="saveSeats()">儲存座位表</button>
+    <button onclick="loadSeats()">讀取座位表</button>
+    <button onclick="resetSeats()">重置座位表</button><BR>
     <form name="option" action="">
         <input type="radio" name="function" value="0">選座位
         <input type="radio" name="function" value="1">刪座位
@@ -46,6 +49,11 @@
         const seatArea = document.querySelector('.seats-area');
 
         let k, i, seat;
+        let seatsChooseData = [];
+        let seatsDeleteData = [];
+        let savedSeatsChooseData = [];
+        let saveSeatsDeleteData = [];
+
         function creatSeats() {
             seatArea.innerHTML = '';
             for (k = 0; k < rows.value; k++) {
@@ -67,6 +75,8 @@
                     seat.style.top = y + 23 * k + 'px';
                     seat.style.backgroundColor = '#ccc';
                     seat.style.opacity = 1;
+                    seat.setAttribute('myPosition', `row${k}_col${i}`);
+                    seat.id = `row${k}_col${i}`;
                     seat.onclick = chooseSeats;
                     seatArea.appendChild(seat);
                 }
@@ -82,10 +92,14 @@
                     if (this.style.opacity == 1) {
                         this.style.opacity = 0;
                         this.style.backgroundColor = '#ccc';
+                        seatsDeleteData.push(this.getAttribute('myPosition'));
+                        // console.log(seatsDeleteData);
                         return;
                     }
                     else {
                         this.style.opacity = 1;
+                        seatsDeleteData.pop(this.getAttribute('myPosition'));
+                        // console.log(seatsDeleteData);
                         return;
                     }
                 }
@@ -93,16 +107,60 @@
                 else {
                     if (this.style.backgroundColor == 'rgb(204, 204, 204)') {
                         this.style.backgroundColor = '#faa';
+                        seatsChooseData.push(this.getAttribute('myPosition'));
+                        // console.log(seatsChooseData);
                         return;
                     }
                     else {
                         this.style.backgroundColor = '#ccc';
+                        seatsChooseData.pop(this.getAttribute('myPosition'));
+                        // console.log(seatsChooseData);
                         return;
                     }
                 }
             }
         }
 
+        function saveSeats() {
+            saveSeatsDeleteData = [];
+            savedSeatsChooseData = [];
+            saveSeatsDeleteData = JSON.parse(JSON.stringify(seatsDeleteData));
+            savedSeatsChooseData = JSON.parse(JSON.stringify(seatsChooseData));
+        }
+
+        function loadSeats() {
+            const seats = document.querySelectorAll('.seat');
+
+            for (let i = 0; i < seats.length; i++) {
+
+                seats[i].style.backgroundColor = '#ccc';
+                seats[i].style.opacity = 1;
+
+
+
+                if (saveSeatsDeleteData.indexOf(seats[i].getAttribute('myPosition')) != -1) {
+                    seats[i].style.opacity = 0;
+                    seats[i].style.backgroundColor = '#ccc';
+                }
+
+                if (savedSeatsChooseData.indexOf(seats[i].getAttribute('myPosition')) != -1) {
+                    seats[i].style.backgroundColor = '#faa';
+                }
+            }
+
+
+        }
+
+        function resetSeats() {
+            const seats = document.querySelectorAll('.seat');
+            seatsDeleteData = [];
+            seatsChooseData = [];
+            for (let i = 0; i < seats.length; i++) {
+                seats[i].style.backgroundColor = '#ccc';
+                seats[i].style.opacity = 1;
+
+            }
+        }
 
     </script>
 </body>
