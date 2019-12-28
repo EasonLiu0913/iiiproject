@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>snake game</title>
+    <style>
+        .row {
+            display: flex;
+        }
+
+        .box {
+            width: 50px;
+            height: 50px;
+            background-color: #aff;
+            margin: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+    </div>
+
+    <script>
+        const container = document.querySelector('.container');
+
+
+        //初始設定10＊10方格，並新增div方塊到container內   
+        let maxRow = 10;
+        let element;
+        for (let index = 0; index < maxRow; index++) {
+            element = document.createElement('div');
+            element.className = 'row';
+            element.style.display = 'flex';
+            for (let index = 0; index < maxRow; index++) {
+                element.innerHTML += '<div class="box"></div>';
+            }
+            container.appendChild(element);
+        }
+
+        //設置移動速度
+        const speed = 300;
+
+        //設定背景色 & 蛇顏色
+        const backgroundColor = '#aff';
+        const snakeColor = '#faa';
+        const randomBoxColor = '#ffa';
+
+        //設定全部rows物件
+        const rows = container.querySelectorAll('.row');
+
+        //初始設定方向為向右
+        let direct = 'right';
+        //初始設定重置遊戲判斷
+        let isResetGame = false;
+        //宣告蛇身的陣列
+        let ar;
+        //宣告隨機方塊物件
+        let randomBox;
+        //判斷未渲染前重複改變方向
+        let isChangeDirecting = false;
+
+        //方格變色的函式
+        function changeColor(x, y, color) {
+            const box = rows[y].querySelectorAll('.box');
+            box[x].style.background = color; //"#faa"; //#aff;
+        }
+
+        function randomChangeColor() {
+            let randomX, randomY;
+            function getNewRandom() {
+                randomX = Math.floor(Math.random() * (maxRow - 1));
+                randomY = Math.floor(Math.random() * (maxRow - 1));
+                let isOverlap;
+                ar.forEach((obj) => {
+                    if (obj.x === randomX && obj.y === randomY) {
+                        isOverlap = true;
+                        return;
+                    }
+                });
+
+                if (isOverlap) {
+                    getNewRandom();
+                }
+                else {
+                    randomBox = { x: randomX, y: randomY };
+                    changeColor(randomX, randomY, randomBoxColor);
+                }
+            }
+
+            getNewRandom();
+        }
+
+        function gameReset() {
+            const boxs = document.querySelectorAll('.box');
+            const nodes = Array.prototype.slice.call(boxs, 0);
+            direct = 'right';
+            boxs.forEach((obj, i) => {
+                boxs[i].style.backgroundColor = backgroundColor;
+            });
+            //初始設定兩格
+            ar = [{ x: 2, y: 1 }, { x: 1, y: 1 }];
+            //初始格變色
+            ar.forEach(function (obj, index) {
+                changeColor(obj.x, obj.y, snakeColor);
+            });
+            randomChangeColor();
+        }
+
+        function gameover() {
+            stopGame = true;
+            let msg = '遊戲結束，是否要重來一場？'
+            if (confirm(msg) === true) {
+                gameReset();
+            }
+            else {
+                clearInterval(startGame);
+            }
+        }
+
+        //設定移動方向
+        function snakeGo() {
+            if (direct === 'right') {
+                isResetGame = false;
+                let newX = (ar[0].x === maxRow - 1) ? 0 : ar[0].x + 1;
+                changeColor(newX, ar[0].y, snakeColor);
+                ar.unshift({
+                    "x": newX, "y": ar[0].y
+                });
+
+                ar.forEach((obj, i) => {
+                    if (i !== 0 && obj.x === newX && obj.y === ar[0].y) {
+                        isResetGame = true;
+                        gameover();
+                    }
+                });
+
+                if (!isResetGame) {
+                    if (newX !== randomBox.x || ar[0].y !== randomBox.y) {
+                        changeColor(ar[ar.length - 1].x, ar[ar.length - 1].y, backgroundColor);
+                        ar.pop();
+                    }
+                    else {
+                        randomChangeColor();
+                    }
+                }
+            }
+
+            else if (direct === 'down') {
+                let newY = (ar[0].y === maxRow - 1) ? 0 : ar[0].y + 1;
+                changeColor(ar[0].x, newY, snakeColor);
+                ar.unshift({
+                    "x": ar[0].x, "y": newY
+                });
+
+                ar.forEach((obj, i) => {
+                    if (i !== 0 && obj.x === ar[0].x && obj.y === newY) {
+                        isResetGame = true;
+                        gameover();
+                    }
+                });
+
+                if (!isResetGame) {
+                    if (ar[0].x !== randomBox.x || newY !== randomBox.y) {
+                        changeColor(ar[ar.length - 1].x, ar[ar.length - 1].y, backgroundColor);
+                        ar.pop();
+                    }
+                    else {
+                        randomChangeColor();
+                    }
+                }
+            }
+
+            else if (direct === 'left') {
+                let newX = (ar[0].x === 0) ? maxRow - 1 : ar[0].x - 1;
+                changeColor(newX, ar[0].y, snakeColor);
+                ar.unshift({
+                    "x": newX, "y": ar[0].y
+                });
+
+                ar.forEach((obj, i) => {
+                    if (i !== 0 && obj.x === newX && obj.y === ar[0].y) {
+                        isResetGame = true;
+                        gameover();
+                    }
+                });
+
+                if (!isResetGame) {
+                    if (newX !== randomBox.x || ar[0].y !== randomBox.y) {
+                        changeColor(ar[ar.length - 1].x, ar[ar.length - 1].y, backgroundColor);
+                        ar.pop();
+                    }
+                    else {
+                        randomChangeColor();
+                    }
+                }
+            }
+
+            else if (direct === 'up') {
+                let newY = (ar[0].y === 0) ? maxRow - 1 : ar[0].y - 1;
+                changeColor(ar[0].x, newY, snakeColor);
+                ar.unshift({
+                    "x": ar[0].x, "y": newY
+                });
+
+                ar.forEach((obj, i) => {
+                    if (i !== 0 && obj.x === ar[0].x && obj.y === newY) {
+                        isResetGame = true;
+                        gameover();
+                    }
+                });
+
+                if (!isResetGame) {
+                    if (ar[0].x !== randomBox.x || newY !== randomBox.y) {
+                        changeColor(ar[ar.length - 1].x, ar[ar.length - 1].y, backgroundColor);
+                        ar.pop();
+                    }
+                    else {
+                        randomChangeColor();
+                    }
+                }
+            }
+            isChangeDirecting = false;
+        }
+
+        //遊戲初始化重置
+        gameReset();
+
+        //依照預設移動速度執行
+        let startGame = setInterval(() => {
+            snakeGo();
+        }, speed);
+
+        //監控鍵盤上下左右控制
+        window.addEventListener('keydown', function (e) {
+            if (e.keyCode === 37 && !isChangeDirecting && direct !== 'right') {
+                isChangeDirecting = true;
+                direct = 'left';
+            }
+            else if (e.keyCode === 38 && !isChangeDirecting && direct !== 'down') {
+                isChangeDirecting = true;
+                direct = 'up';
+            }
+
+            else if (e.keyCode === 39 && !isChangeDirecting && direct !== 'left') {
+                isChangeDirecting = true;
+                direct = 'right';
+            }
+            else if (e.keyCode === 40 && !isChangeDirecting && direct !== 'up') {
+                isChangeDirecting = true;
+                direct = 'down';
+            }
+        })
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>
