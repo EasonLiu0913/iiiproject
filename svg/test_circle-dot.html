@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>svg test circle dots</title>
+  </head>
+  <body>
+    <svg width="250" height="250">
+      <!-- 故意將 X, Y 軸線外觀設定得粗一點 -->
+      <rect x="0" y="0" width="50" height="200" fill="gray" />
+      <rect x="50" y="200" width="200" height="50" fill="gray" />
+
+      <!-- 將圓點一起移動至 X, Y 軸之內的正確顯示位置 -->
+      <g transform="translate(50,10)">
+        <circle cx="0" cy="0" r="10" style="" />
+        <circle cx="100" cy="100" r="10" style="" />
+        <circle cx="130" cy="120" r="10" style="" />
+        <circle cx="80" cy="180" r="10" style="" />
+        <circle cx="180" cy="80" r="10" style="" />
+        <circle cx="180" cy="40" r="10" style="" />
+      </g>
+    </svg>
+  </body>
+</html>
