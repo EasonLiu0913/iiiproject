@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>test svg line chart</title>
+  </head>
+  <body>
+    <svg width="250" height="250">
+      <rect x="0" y="0" width="3" height="200" fill="gray" />
+      <rect x="0" y="200" width="200" height="3" fill="gray" />
+
+      <g transform="translate(0,-20)">
+        <path
+          d="M0 200 L50 50 L100 150 L150 100 L200 150"
+          fill="none"
+          stroke="black"
+          stroke-width="3"
+        />
+      </g>
+    </svg>
+  </body>
+</html>
