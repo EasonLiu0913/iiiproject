@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+.sphere {
+  fill: #4242e4;
+}
+
+.country {
+  fill: lightgreen;
+  stroke: black;
+  stroke-opacity: 0.1;
+}
+
+.country:hover {
+  fill: rgb(215, 172, 33);
+}
+
+.container {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+svg {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+
+#titleCounty {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  font-size: 50px;
+}
+
+#titleTown {
+  position: absolute;
+  top: 170px;
+  left: 50px;
+  font-size: 40px;
+}
