@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>index</title>
+
+    <style>
+      header {
+        margin: 0 80px;
+      }
+      .container {
+        display: inline-block;
+        margin: 0 80px;
+      }
+
+      .row {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .cardBox {
+        width: 500px;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 50px 80px;
+      }
+
+      .box {
+        width: 100px;
+        height: 100px;
+        margin: 2px 2px 2px 2px;
+      }
+
+      .box-bg {
+        outline: 1px solid #666;
+        background-color: #aaa;
+        text-align: center;
+        font-size: 70px;
+      }
+
+      .card,
+      .card2 {
+        width: 100px;
+        height: 100px;
+        outline: 1px solid rgb(91, 57, 57);
+        background-color: rgb(0, 67, 87);
+        color: white;
+        text-align: center;
+        font-size: 70px;
+        /* padding-top: 10px; */
+        z-index: 1;
+      }
+
+      .ui-draggable-dragging {
+        z-index: 999;
+      }
+
+      .info {
+        font-size: 28px;
+        margin-top: 50px;
+      }
+
+      .shake-vertical {
+        color: red;
+        -webkit-animation: shake-vertical 100ms ease-in-out infinite;
+        -moz-animation: shake-vertical 100ms ease-in-out infinite;
+        -ms-animation: shake-vertical 100ms ease-in-out infinite;
+        -o-animation: shake-vertical 100ms ease-in-out infinite;
+        animation: shake-vertical 100ms ease-in-out infinite;
+      }
+
+      @keyframes shake-vertical {
+        0% {
+          transform: translate(0, 0) rotate(0);
+        }
+        25% {
+          transform: translate(0, 3px) rotate(0);
+        }
+        50% {
+          transform: translate(0, 0px) rotate(0);
+        }
+        75% {
+          transform: translate(0, -6px) rotate(0);
+        }
+        100% {
+          transform: translate(0, 0) rotate(0);
+        }
+      }
+
+      @-webkit-keyframes shake-vertical {
+        0% {
+          transform: translate(0, 0) rotate(0);
+        }
+        25% {
+          transform: translate(0, 3px) rotate(0);
+        }
+
+        50% {
+          transform: translate(0, 0px) rotate(0);
+        }
+        75% {
+          transform: translate(0, -6px) rotate(0);
+        }
+        100% {
+          transform: translate(0, 0) rotate(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>請將卡排拖曳放入組合區</h1>
+      <h2>直排相乘為攻擊，橫排相加為防禦</h2>
+    </header>
+
+    <div class="cardBox"></div>
+    <div class="container">
+      <h2>Player1 Card Area:</h2>
+      <div class="row">
+        <div class="box"></div>
+        <div id="p1Top" class="box box-bg droppable"></div>
+        <div class="box"></div>
+      </div>
+      <div class="row">
+        <div id="p1Left" class="box box-bg droppable"></div>
+        <div id="p1Center" class="box box-bg droppable"></div>
+        <div id="p1Right" class="box box-bg droppable"></div>
+      </div>
+      <div class="row">
+        <div class="box"></div>
+        <div id="p1Bottom" class="box box-bg droppable"></div>
+        <div class="box"></div>
+      </div>
+
+      <div class="info">
+        <span>血量：</span>
+        <span id="id_player1_hp">20</span><br />
+        <span>攻擊：</span>
+        <span id="id_player1_atk"></span><br />
+        <span>防禦：</span>
+        <span id="id_player1_def"></span><br />
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Player2 Card Area:</h2>
+      <div class="row">
+        <div class="box"></div>
+        <div id="p2Top" class="box box-bg droppable"></div>
+        <div class="box"></div>
+      </div>
+      <div class="row">
+        <div id="p2Left" class="box box-bg droppable"></div>
+        <div id="p2Center" class="box box-bg droppable"></div>
+        <div id="p2Right" class="box box-bg droppable"></div>
+      </div>
+      <div class="row">
+        <div class="box"></div>
+        <div id="p2Bottom" class="box box-bg droppable"></div>
+        <div class="box"></div>
+      </div>
+
+      <div class="info">
+        <span>血量：</span>
+        <span id="id_player2_hp">20</span><br />
+        <span>攻擊：</span>
+        <span id="id_player2_atk"></span><br />
+        <span>防禦：</span>
+        <span id="id_player2_def"></span><br />
+      </div>
+    </div>
+
+    <button style="width:90px;height:50px;font-size: 30px;">Go</button>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+      const container = document.querySelector(".container");
+      const player1HP = document.querySelector("#id_player1_hp");
+      const player1Atk = document.querySelector("#id_player1_atk");
+      const player1Def = document.querySelector("#id_player1_def");
+      const player2HP = document.querySelector("#id_player2_hp");
+      const player2Atk = document.querySelector("#id_player2_atk");
+      const player2Def = document.querySelector("#id_player2_def");
+      const btn = document.querySelector("button");
+
+      const idArray = [
+        "#cardp1Top",
+        "#cardp1Left",
+        "#cardp1Center",
+        "#cardp1Right",
+        "#cardp1Bottom",
+        "#cardp2Top",
+        "#cardp2Left",
+        "#cardp2Center",
+        "#cardp2Right",
+        "#cardp2Bottom"
+      ];
+      const recIdArray = [];
+      let isGameOver = false;
+
+      $(function() {
+        //偵測所有 className 為 droppable 的物件，當有拖曳到它上面的動作時執行以下程式
+        $(".droppable").droppable({
+          drop: function(event, ui) {
+            ui.draggable.attr(
+              "class",
+              "card draggable ui-draggable ui-draggable-handle "
+            );
+            //先確認是否已有卡片覆蓋在該 droppable 物件上，如果有則不執行任何改變（=讓卡牌彈回原位）
+            if (checkIfAlreadyHaveOneCardOnIt("card" + $(this).attr("id"))) {
+              ui.draggable.attr(
+                "class",
+                "card draggable ui-draggable ui-draggable-handle"
+              );
+            } else {
+              //確認是否有記錄該格的 id 在 recIdArray 之中，如果有就先移除
+              //代表卡片可能從其中一格換到另一個沒有卡片的空位，所以移除原本位置的 id 記錄
+              ui.draggable.attr(
+                "class",
+                "card draggable ui-draggable ui-draggable-handle"
+              );
+              checkIfAlreadyHaveCardId(ui.draggable.attr("id"));
+
+              //將卡片的位置改變成該格位置的座標
+              ui.draggable.position({
+                of: $(this),
+                my: "left top",
+                at: "left top"
+              });
+
+              //設定該卡片的 id 屬性為 card + 位置 id 的字串
+              ui.draggable.attr("id", "card" + $(this).attr("id"));
+              //將該格設定成不可再放其他卡片
+              $(this).droppable("disable");
+              //記錄該卡片 id 到 recIdArray 陣列之中
+              recIdArray.push(ui.draggable.attr("id"));
+              //改變網頁文字顯示，做到即時更新數值的效果
+              changeDataDisplay(ui.draggable.attr("id"));
+            }
+          }
+        });
+      });
+
+      //判斷是否已經有卡片覆蓋在上面，如果有，就返回 true
+      function checkIfAlreadyHaveOneCardOnIt(checkId) {
+        if (recIdArray.indexOf(checkId) !== -1) {
+          return true;
+        }
+      }
+
+      //判斷陣列之中是否已有這個卡片 id 記錄，如果有，就從陣列中移除。
+      //主要是用在卡牌換新位置之後，將原本舊位置還原空格的狀態
+      function checkIfAlreadyHaveCardId(checkId) {
+        if (recIdArray.indexOf(checkId) !== -1) {
+          //將卡牌 id 從 recIdArray 中移除
+          recIdArray.splice(recIdArray.indexOf(checkId), 1);
+          //將該卡牌 id 去掉前四位的字串（也就是去掉 card 的字串，即可取得該空格的 id）
+          checkId = checkId.substring(4, checkId.length);
+          //將原本的格子從不可再放卡牌，改變成又可以放卡牌的狀態
+          $("#" + checkId).droppable("enable");
+          return true;
+        }
+      }
+
+      //即時改變網頁上的攻擊&防禦數字顯示
+      function changeDataDisplay() {
+        const p1Top = document.querySelector(idArray[0]);
+        const p1Left = document.querySelector(idArray[1]);
+        const p1Center = document.querySelector(idArray[2]);
+        const p1Right = document.querySelector(idArray[3]);
+        const p1Bottom = document.querySelector(idArray[4]);
+        const countingArray = [];
+
+        //如果 player2 直排有卡片的話，則進行計算，否則就將攻擊歸零
+        if (p1Top || p1Center || p1Bottom) {
+          countingArray.length = 0;
+          countingArray.push(!!p1Top ? p1Top.innerHTML : 1);
+          countingArray.push(!!p1Center ? p1Center.innerHTML : 1);
+          countingArray.push(!!p1Bottom ? p1Bottom.innerHTML : 1);
+          player1Atk.innerHTML =
+            countingArray[0] * 1 * countingArray[1] * 1 * countingArray[2] * 1;
+        } else {
+          player1Atk.innerHTML = 0;
+        }
+
+        //如果 player1 橫排有卡片的話，則進行計算，否則就將防禦歸零
+        if (p1Left || p1Center || p1Right) {
+          countingArray.length = 0;
+          countingArray.push(!!p1Left ? p1Left.innerHTML : 0);
+          countingArray.push(!!p1Center ? p1Center.innerHTML : 0);
+          countingArray.push(!!p1Right ? p1Right.innerHTML : 0);
+
+          player1Def.innerHTML =
+            countingArray[0] * 1 + countingArray[1] * 1 + countingArray[2] * 1;
+        } else {
+          player1Def.innerHTML = 0;
+        }
+
+        const p2Top = document.querySelector(idArray[5]);
+        const p2Left = document.querySelector(idArray[6]);
+        const p2Center = document.querySelector(idArray[7]);
+        const p2Right = document.querySelector(idArray[8]);
+        const p2Bottom = document.querySelector(idArray[9]);
+
+        //如果 player2 直排有卡片的話，則進行計算，否則就將攻擊歸零
+        if (p2Top || p2Center || p2Bottom) {
+          countingArray.length = 0;
+          countingArray.push(!!p2Top ? p2Top.innerHTML : 1);
+          countingArray.push(!!p2Center ? p2Center.innerHTML : 1);
+          countingArray.push(!!p2Bottom ? p2Bottom.innerHTML : 1);
+          player2Atk.innerHTML =
+            countingArray[0] * 1 * countingArray[1] * 1 * countingArray[2] * 1;
+        } else {
+          player2Atk.innerHTML = 0;
+        }
+
+        //如果 player2 橫排有卡片的話，則進行計算，否則就將防禦歸零
+        if (p2Left || p2Center || p2Right) {
+          countingArray.length = 0;
+          countingArray.push(!!p2Left ? p2Left.innerHTML : 0);
+          countingArray.push(!!p2Center ? p2Center.innerHTML : 0);
+          countingArray.push(!!p2Right ? p2Right.innerHTML : 0);
+          player2Def.innerHTML =
+            countingArray[0] * 1 + countingArray[1] * 1 + countingArray[2] * 1;
+        } else {
+          player2Def.innerHTML = 0;
+        }
+      }
+
+      //重置遊戲
+      function resetGame() {
+        btn.innerHTML = "Go";
+        player1HP.innerHTML = 20;
+        player1Atk.innerHTML = "";
+        player1Def.innerHTML = "";
+        player2HP.innerHTML = 20;
+        player2Atk.innerHTML = "";
+        player2Def.innerHTML = "";
+      }
+
+      //遊戲取得卡牌
+      function getCards() {
+        //如果是遊戲結束狀態，先重置遊戲，再取得卡牌
+        if (gameOver) {
+          isGameOver = false;
+          resetGame();
+        }
+
+        //設定空白 div
+        let blankDiv;
+
+        //預設跑 10 張隨機卡牌
+        for (let i = 0; i < 10; i++) {
+          //設定隨機數字 1～5
+          const num = Math.floor(Math.random() * 5 + 1);
+
+          //設定卡牌顯示的數字並新增到卡牌庫位置
+          blankDiv = document.createElement("div");
+          blankDiv.className = "card draggable";
+          blankDiv.innerHTML = num;
+          $("div.cardBox").append(blankDiv);
+        }
+        //設定卡牌如果沒有接近正確空格處，會自動返回原本位置
+        $(".draggable").draggable({ revert: "invalid" });
+        //設定卡牌自動貼齊目標為 .box 的卡牌放置處
+        $(".draggable").draggable({ snap: ".box" });
+      }
+
+      //當網頁讀取完，就執行發牌
+      $(document).ready(getCards());
+
+      //遊戲還沒結束的話，進行下一回合的發牌
+      function changeToNextRound() {
+        //先將舊卡牌移除
+        $(".card").remove();
+        //所有空格狀態重置回可拖曳的狀態
+        $(".droppable").droppable("enable");
+        //記錄卡牌 id 陣列重置清空
+        recIdArray.length = 0;
+        //開始發牌
+        getCards();
+      }
+
+      //遊戲結束
+      function gameOver() {
+        //設定遊戲結束布林值為true
+        isGameOver = true;
+        //改變按鈕的文字
+        btn.innerHTML = "重來";
+
+        //顯示遊戲結果
+        if (player1HP.innerHTML * 1 <= 0 && player2HP.innerHTML * 1 <= 0) {
+          player1HP.innerHTML += " 嘿, 你們平手";
+          player2HP.innerHTML += " 嘿, 你們平手";
+        } else if (
+          player1HP.innerHTML * 1 >= 0 &&
+          player2HP.innerHTML * 1 <= 0
+        ) {
+          player1HP.innerHTML += " 嘿, 你贏了";
+          player2HP.innerHTML += " 你輸了...";
+        } else if (
+          player1HP.innerHTML * 1 <= 0 &&
+          player2HP.innerHTML * 1 >= 0
+        ) {
+          player1HP.innerHTML += " 你輸了...";
+          player2HP.innerHTML += " 嘿, 你贏了";
+        }
+      }
+
+      //本地端伺服器負責接受遊戲數據處理的連結
+      const uri = "http://localhost:3000/gamedata";
+
+      //設定按鈕 click 之後要執行什麼動作
+      const listener = () => {
+        //如果是遊戲結束狀態
+        if (isGameOver) {
+          //重來一局
+          changeToNextRound();
+        } else {
+          //確認 10 張卡牌都已被放置，則執行底下 ajax
+          if (recIdArray.length === 10) {
+            $.ajax({
+              url: uri,
+              //傳送兩位玩家的數據到後台
+              data: JSON.stringify({
+                player1: {
+                  hp: player1HP.innerHTML,
+                  atk: player1Atk.innerHTML,
+                  def: player1Def.innerHTML
+                },
+                player2: {
+                  hp: player2HP.innerHTML,
+                  atk: player2Atk.innerHTML,
+                  def: player2Def.innerHTML
+                }
+              }),
+              dataType: "json",
+              method: "POST",
+              contentType: "application/json;charset=utf-8",
+              error: function(err) {
+                //如果是error，表示目前沒有連結後端，則改由前端自己計算
+                //這邊是希望設定成沒有伺服器也能本地端遊玩
+                console.log("err" + err);
+
+                //計算玩家 1 的數據
+                const player1_minus =
+                  player2Atk.innerHTML * 1 - player1Def.innerHTML * 1;
+                player1HP.innerHTML =
+                  player1HP.innerHTML * 1 -
+                  (player1_minus > 0 ? player1_minus : 0);
+
+                //計算玩家 2 的數據
+                const player2_minus =
+                  player1Atk.innerHTML * 1 - player2Def.innerHTML * 1;
+                player2HP.innerHTML =
+                  player2HP.innerHTML * 1 -
+                  (player2_minus > 0 ? player2_minus : 0);
+
+                //執行扣血的動畫，並在 1 秒後自動停止動畫效果
+                $(".container").toggleClass("shake-vertical");
+                setTimeout(function() {
+                  $(".container").toggleClass("shake-vertical");
+                }, 1000);
+
+                //用玩家血量是否都大於零來判斷是否結束遊戲，或進入下一輪發牌
+                if (
+                  player1HP.innerHTML * 1 > 0 &&
+                  player2HP.innerHTML * 1 > 0
+                ) {
+                  changeToNextRound();
+                } else {
+                  gameOver();
+                }
+              },
+              success: function(res) {
+                //如果伺服器成功回傳兩玩家的血量，則進行畫面血量的更新
+                player1HP.innerHTML = res.player1;
+                player2HP.innerHTML = res.player2;
+
+                //執行扣血的動畫，並在 1 秒後自動停止動畫效果
+                $(".container").toggleClass("shake-vertical");
+                setTimeout(function() {
+                  $(".container").toggleClass("shake-vertical");
+                }, 1000);
+
+                //用玩家血量是否都大於零來判斷是否結束遊戲，或進入下一輪發牌
+                if (res.player1 * 1 > 0 && res.player2 * 1 > 0) {
+                  changeToNextRound();
+                } else {
+                  gameOver();
+                }
+              }
+            });
+          } else {
+            //沒有把全部卡牌都放置到玩家卡牌區就按的話，則跳出警告視窗提醒玩家
+            alert("你似乎還沒選完全部卡牌喔");
+          }
+        }
+      };
+
+      //針對按鈕新增一個監聽器
+      btn.addEventListener("click", listener);
+    </script>
+  </body>
+</html>
