@@ -2,6 +2,24 @@
 const width = window.innerWidth,
   height = window.innerHeight;
 
+//取得瀏覽器寬高，並更改 svg 寬高
+function getHeight() {
+  document.querySelector("svg").style.height = window.innerHeight + 2;
+  document.querySelector("svg").style.width = window.innerWidth + 2;
+}
+
+//更改 svg 寬高
+getHeight();
+
+//設定 windows 監聽器，更改瀏覽器尺寸時自動更改 svg 寬高
+window.addEventListener(
+  "resize",
+  e => {
+    this.getHeight();
+  },
+  false
+);
+
 //先設定 svg 方便後面呼叫,並設定寬高與瀏覽器內容相同
 const svg = d3
   .select("svg")
@@ -15,7 +33,7 @@ w = window.screen.width;
 if (w > 1366) {
   mercatorScale = 11000;
   wDenominator = 3.2;
-  hDenominator = 2.5;
+  hDenominator = 2.2;
 } else if (w <= 1366 && w > 480) {
   mercatorScale = 20000;
   wDenominator = 1.3;
