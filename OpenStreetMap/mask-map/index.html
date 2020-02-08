@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mask-Map using osm</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+    </link>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+    </link>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .marker-cluster-small {
+            background-color: rgba(181, 226, 140, 0.6);
+        }
+
+        .marker-cluster-small div {
+            background-color: rgba(110, 204, 57, 0.6);
+        }
+
+        .marker-cluster-medium {
+            background-color: rgba(241, 211, 87, 0.6);
+        }
+
+        .marker-cluster-medium div {
+            background-color: rgba(240, 194, 12, 0.6);
+        }
+
+        .marker-cluster-large {
+            background-color: rgba(253, 156, 115, 0.6);
+        }
+
+        .marker-cluster-large div {
+            background-color: rgba(241, 128, 23, 0.6);
+        }
+
+        .marker-cluster {
+            background-clip: padding-box;
+            border-radius: 20px;
+        }
+
+        .marker-cluster div {
+            width: 30px;
+            height: 30px;
+            margin-left: 5px;
+            margin-top: 5px;
+
+            text-align: center;
+            border-radius: 15px;
+            font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .marker-cluster span {
+            line-height: 30px;
+        }
+
+        .leaflet-popup-content h2 {
+            margin: 0;
+        }
+
+        .leaflet-popup-content p {
+            font-size: 14px;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <script>
+        let userlatitude = 25.0539;
+        let userLongitude = 121.545012;
+        if (navigator.geolocation) {
+            console.log('Geolocation is supported!');
+            window.onload = function () {
+                let geoSuccess = function (position) {
+                    userlatitude = position.coords.latitude;
+                    userLongitude = position.coords.longitude;
+                    console.log('position.coords.latitude=' + position.coords.latitude);
+                    console.log('position.coords.longitude=' + position.coords.longitude);
+                    createMap();
+                };
+
+                let onError = function (error) {
+                    createMap();
+                }
+
+                navigator.geolocation.getCurrentPosition(geoSuccess, onError, { timeout: 30000 });
+            };
+        }
+        else {
+            console.log('Geolocation is not supported for this Browser/OS version yet.');
+            createMap();
+        }
+
+        function createMap() {
+            var map = L.map('map', {
+                center: [userlatitude, userLongitude],
+                zoom: 16
+            });
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            var markers = new L.MarkerClusterGroup().addTo(map);
+            getMaskData(map, markers);
+        }
+
+        var greenIcon = new L.Icon({
+            iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        function getMaskData(map, markers) {
+            let xhr = new XMLHttpRequest();
+            //使用 江明宗 (Finjon Kiang) 提供的藥局資料，感謝分享。
+            xhr.open("get", "https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json");
+            xhr.send();
+            xhr.onload = function () {
+                let data = JSON.parse(xhr.responseText).features
+                for (let i = 0; data.length > i; i++) {
+                    let mask;
+                    let popupInfo = '<h2>' + data[i].properties.name + '</h2>' + '<p>電話: ' + data[i].properties.phone + '</p>' + '<p>地址: ' + data[i].properties.address + '</p>' + '<br>' + '<p>成人口罩數量: ' + data[i].properties.mask_adult + '</p>' + '<p>兒童口罩數量: ' + data[i].properties.mask_child + '</p>' + '<br>' + '<p>更新時間: ' + ((data[i].properties.updated) ? data[i].properties.updated : '未知') + '</p>';
+                    let tipMsg = '<span>藥局雖顯示仍有口罩，有可能是銷售記錄未上傳更新。<br>建議先電話詢問再前往購買。</span>';
+                    if (data[i].properties.mask_adult > 0 || data[i].properties.mask_child > 0) {
+                        popupInfo += tipMsg;
+                        mask = greenIcon;
+                        markers.addLayer(L.marker([data[i].geometry.coordinates[1], data[i].geometry.coordinates[0]], { icon: mask }).bindPopup(popupInfo));
+                    }
+
+                }
+                map.addLayer(markers);
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
