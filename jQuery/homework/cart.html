@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Mask Shopping Cart</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .table thead th {
+            border-bottom: 1px solid #ccc;
+        }
+
+        .table th {
+            vertical-align: middle;
+        }
+
+        .container>h5 {
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h5>Hi, <訪客> 歡迎來到資策會口罩銷售平台</h5>
+        <h6>請選擇您想要購買的口罩及數量：</h6>
+        <div class="d-flex" id="mask">
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-4">
+                <div id="cart" class="cart card">
+                    <div class="card-body">
+                        <h3 class="card-title h5">購物車</h3>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th class="text-nowrap">品名</th>
+                                    <th class="text-nowrap">單價</th>
+                                    <th style="width:70px;padding-left:30px;">數量</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart-list">
+                            </tbody>
+                        </table>
+                        <span id="totalPrice" style="float:right;padding-bottom:5px;"></span>
+                        <button id="checkoutBtn" class="btn btn-info btn-block" disabled="disabled">結帳</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+        //設定 ajax 失敗重試次數
+        let ajaxRetryNum = 0;
+
+        //設定一個取得口罩資料的函式
+        function getData() {
+            $.ajax({
+                method: "GET",
+                url: "food.json",
+                dataType: "json"
+            })
+                .done(function (mask) {
+                    //重試次數歸零
+                    ajaxRetryNum = 0;
+
+                    //將口罩資料呈現
+                    mask.forEach(function (item) {
+                        $("#mask").append(`
+                        <div class="card  mt-2" style="width: 18rem;">
+                            <img src="./images/${item.image}" class="card-img-top" alt="...">
+                                <div class="card-body py-0">
+                                    <h5 class="card-title" id="name" data-name="${item.name}">${item.name}</h5>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-text text-danger" data-price="${item.price}">$${item.price}</p>
+                                        <button type="button" class="btn btn-primary mb-3" id="shopping-cart"><i
+                                            class="fas fa-shopping-cart"></i></button>
+                                    </div>
+                                </div>
+                        </div>
+                    `)
+                    });
+                })
+                .fail(function () {
+                    //如果失敗次數在 5 次以內，則重新取得資料;
+                    if (ajaxRetryNum < 5) getData();
+                    //失敗次數 +1
+                    ajaxRetryNum += 1;
+                })
+                .always(function () {
+                    //目前功能較陽春尚且用不到 .always 功能，等待未來再新增更多功能
+                });
+        }
+
+        //開始取得口罩資料
+        getData();
+
+        //點擊加入購物車按鈕
+        $(document).on("click", "#shopping-cart", function () {
+            //取得點擊的口罩名稱、價錢
+            let name = $(this).closest('.card-body').find('.card-title').data('name');
+            let price = $(this).closest('.card-body').find('.card-text').data("price");
+
+            //如果是初次點擊，直接將口罩資料加入購物車中
+            if ($("#cart-list tr").length === 0) {
+                appendNewList(name, price);
+            }
+            else {
+                //判斷口罩是否已存在購物車中
+                let isAlreadyExist = false;
+
+                //用 each 檢查購物車清單
+                $("#cart-list tr").each(function () {
+                    //取得購物車清單內的口罩名稱
+                    let shoppingListName = $(this).find('.cart-name').text();
+
+                    //如果比對成功則將該口罩的購買數量 +1，並設定 isAlreadyExist = true
+                    if (shoppingListName === name) {
+                        let nowVal = parseInt($(this).find('.number').val());
+                        $(this).children().eq(2).children().val(nowVal += 1);
+                        isAlreadyExist = true;
+                    }
+                });
+
+                //如果沒有比對成功的資料，代表該口罩不存在購物車內，則新增一筆口罩資料到購物車中
+                if (!isAlreadyExist) appendNewList(name, price);
+            }
+
+            //重新計算總金額
+            checkTotalPrice();
+        });
+
+        //點擊數量增加按鈕
+        $(document).on("click", "#addBtn", function () {
+            //讓數量等於原本數量 +1，最多不大於 99 個數量
+            let value = parseInt($(this).next().val()) + 1;
+            $(this).next().val(value > 99 ? 99 : value);
+
+            //重新計算總金額
+            checkTotalPrice();
+        });
+
+        //點擊數量減少按鈕
+        $(document).on("click", "#minusBtn", function () {
+            //讓數量等於原本數量 -1
+            let value = parseInt($(this).prev().val()) - 1;
+            $(this).prev().val((value < 0) ? 0 : value);
+
+            //如果數量小於等於 0 則移除商品
+            if (value <= 0) {
+                console.log('remove');
+                $(this).closest('tr').remove();
+            }
+
+            //重新計算總金額
+            checkTotalPrice();
+        });
+
+        //點擊刪除按鈕
+        $(document).on("click", "#delBtn", function () {
+
+            //從購物車將該口罩移除
+            $(this).closest('tr').remove();
+
+            //重新計算總金額
+            checkTotalPrice();
+        });
+
+        //檢查手動輸入數字
+        $(document).on("change", ".number", function () {
+
+            //如果輸入有小數點，則去掉小數點後面的數字，並跳出警告視窗
+            if ($(this).val().indexOf('.') != -1) {
+                let value = $(this).val();
+                value = value.substring(0, value.indexOf('.'));
+                $(this).val(value === '' ? 0 : value);
+                alert('口罩數量不能有小數點')
+            }
+
+            //如果超過 99 個，就讓數字回到 99 ，並跳出視窗通知使用者最大購買數量
+            else if ($(this).val() > 99) {
+                $(this).val(99);
+                alert('抱歉，每種口罩最多只能購買99盒')
+            }
+
+            //重新計算總金額
+            checkTotalPrice();
+        })
+
+        //點擊購物車按鈕後，將商品資料新增到購物車列表
+        function appendNewList(name, price) {
+            $("#cart-list").append(`
+                <tr class="tr">
+                        <th class="text-nowrap cart-name" data-name="${name}">${name}</th>
+                        
+                        <th class="text-nowrap cart-price" >${price}</th>
+                        
+                        <th class="d-flex text-nowrap">
+                            <button id="addBtn" class="btn btn-secondary" style="margin-right:1px;padding:0 5px;">+</button>
+                            <input style="width:30px;" type="number" class="number text-right math" min="0" value="1">
+                            <button id="minusBtn" class="btn btn-secondary" style="margin-left:1px;padding:0 5px;">-</button>
+                            <button id="delBtn" class="btn btn-danger" style="margin-left:2px;padding:0 5px;"><i class="fas fa-trash-alt"></i></button>
+                        </th>
+
+                </tr>
+            `);
+        }
+
+        //確認總價格
+        function checkTotalPrice() {
+            //初始化總金額
+            let totalPrice = 0;
+
+            //尋找購物車清單中所有的單價及數量，並將單價數量相乘後加到總金額
+            $("#cart-list tr").each(function () {
+                let price = parseInt($(this).find('.cart-price').text());
+                let nowVal = parseInt($(this).find('.number').val());
+                totalPrice += price * nowVal;
+            });
+
+            //判斷總金額
+            if (totalPrice == 0) {
+                //如果總金額為零，則清除總計文字，並且讓結帳按鈕 disabled = true
+                $("#totalPrice").text('');
+                $("#checkoutBtn").attr('disabled', true);
+            }
+            else {
+                //如果總金額不為零，文字顯示總金額，並且讓結帳按鈕 disabled = false
+                $("#totalPrice").text("總計：" + totalPrice + "元");
+                $("#checkoutBtn").attr('disabled', false);
+            }
+
+
+        }
+
+    </script>
+</body>
+
+</html>
