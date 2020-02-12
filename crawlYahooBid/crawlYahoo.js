@@ -1,4 +1,3 @@
-// 使用 Nightmare 執行爬蟲
 const Nightmare = require('nightmare');
 const nightmare = Nightmare({ show: true, width: 1280, height: 800 });
 const moment = require('moment');
@@ -21,19 +20,23 @@ const { JSDOM } = jsdom;
 const { window } = new JSDOM();
 const $ = require('jquery')(window);
 
+//切換模式，一個是關鍵字搜尋模式，另一個是直接搜尋商品分類模式
+let mode = 'category'; // keyword or category
+let categoryUrl = 'https://tw.buy.yahoo.com/search/product'; //https://tw.buy.yahoo.com/category/
+
 // 關鍵字
-let strKeyword = 'gopro';
+let strKeyword = '空拍機';
 
 // 放置爬蟲資訊的全域變數 (陣列)
 var arrLink = [];
 
-// 給定網頁原址
-let pageUrl = 'https://tw.buy.yahoo.com/search/product';
+// 給定網頁原址, 關鍵字模式跟分類模式網址不同
+let pageUrl = (mode === 'keyword') ? 'https://tw.buy.yahoo.com/search/product' : categoryUrl;
 
-// 跳頁時，給定 page 資訊，方便知道現在頁面
-let nowPage = '';
+// 跳頁時，給定 page 資訊，方便知道現在頁面，關鍵字模式則使用空字串即可，分類模式要輸入分類編號
+let nowPage = (mode === 'keyword') ? '' : '?flt=攝影機類型_空拍機%2C攝影機類型_無人機&p=空拍機';
 
-// 瀏覽器標頭，讓對方得知我們是人類，而非機器人 (爬蟲)
+// 瀏覽器標頭
 const headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
@@ -44,23 +47,36 @@ const headers = {
 async function searchKeyword() {
     console.log('Ready to search...');
 
-    // 到指定網頁後輸入關鍵字，再按下搜尋
-    await nightmare
-        .goto('https://tw.buy.yahoo.com/', headers)
-        .type('div.UhSearchBox__mod___1lNSz.UhSearchBox__sas___3MwYx > input[type=search]', strKeyword) //輸入關鍵字
-        .wait(2000) //等待數秒…
-        .click('div.UhSearchBox__mod___1lNSz.UhSearchBox__sas___3MwYx > a') //按下「搜尋」
-        .wait(2000) //等待數秒...
-        .catch(error => {
-            console.error('Search failed: ', error)
-        });
+    if (mode === 'keyword') {
+        // 到指定網頁後輸入關鍵字，再按下搜尋
+        await nightmare
+            .goto(pageUrl + nowPage, headers)
+            .type('div.UhSearchBox__mod___1lNSz.UhSearchBox__sas___3MwYx > input[type=search]', strKeyword) //輸入關鍵字
+            .wait(2000) //等待數秒…
+            .click('div.UhSearchBox__mod___1lNSz.UhSearchBox__sas___3MwYx > a') //按下「搜尋」
+            .wait(2000) //等待數秒...
+            .catch(error => {
+                console.error('Search failed: ', error)
+            });
+    }
+    else {
+        //直接前往商品分類網頁即可
+        await nightmare
+            .goto(pageUrl + nowPage, headers)
+            .wait(2000) //等待數秒…
+            .catch(error => {
+                console.error('Search failed: ', error)
+            });
+
+    }
+
 }
 
-// 跳下一頁使用
+// 跳下一頁
 async function gotoNextPage(page) {
     await nightmare
         .goto(pageUrl + page, headers) //原網址 + page 資訊, 並置入 headers
-        .wait(2000) //等待數秒
+        .wait(1000) //等待數秒
         .catch(error => {
             //如果有錯誤就顯示
             console.error('Search failed: ', error)
@@ -80,7 +96,7 @@ async function scrollPage() {
             return document.documentElement.scrollHeight;
         });
         offset += 500;
-        await nightmare.scrollTo(offset, 0).wait(200);
+        await nightmare.scrollTo(offset, 0).wait(500);
     }
 }
 
@@ -88,16 +104,24 @@ async function scrollPage() {
 async function parseHtml() {
     console.log('Ready to parse metadata/elements ...');
 
+    // 滾動頁面到底
+    await scrollPage();
+
     // 取得滾動後，得到動態產生結果的 html 元素，這裡很重要，因為裡面有需要的元素，例如歌名、播放長度等資訊
     let html = await nightmare.evaluate(() => {
         return document.documentElement.innerHTML;
     });
 
+    //計算每頁擷取到多少商品
+    let count = 0;
     // 將爬蟲資訊放到陣列中；
     $(html)
         .find('.BaseGridItem__grid___2wuJ7')
         .each((index, element) => {
-            let obj = {}; // 暫時儲放爬蟲資訊的物件
+            // 暫時儲放爬蟲資訊的物件
+            let obj = {};
+            // 每找到一個商品計算一次
+            count++;
 
             // 將網頁元素的資訊帶入變數
             let name = $(element).find('.BaseGridItem__title___2HWui').text();
@@ -113,24 +137,39 @@ async function parseHtml() {
             arrLink.push(obj);
         });
 
+    // 把 arrLink 寫入 json 檔案之中儲存
+    await writeJson();
+
+    console.log('count=' + count);
+
     // 找是否有下一頁的網址
     let nextPage = $(html).find('.Pagination__icoArrowRight___2KprV').attr('href');
+    let hightlightPageBtn = $(html).find('.Pagination__highlight____eU1J');
+    console.log(hightlightPageBtn.next().text());
+    console.log(hightlightPageBtn.next().attr('class'));
+    console.log('nextPage=' + nextPage);
+    console.log('nowPage=' + nowPage);
+
     // 判斷是否有下一頁
-    if (nextPage && nextPage.indexOf('pg=1') == -1 && nextPage != nowPage) {
+    if (nextPage && nextPage != nowPage) {
         // 將 nowPage 改成 nextPage 
         nowPage = nextPage;
         // 跳到下一頁
         await gotoNextPage(nextPage);
-        // 滾動頁面到底
-        await scrollPage();
         // 執行爬蟲，取得想要的資訊
         await parseHtml();
-        // 寫入 json 檔案之中儲存
-        await writeJson();
     }
+    else if (hightlightPageBtn.next().attr('class') && hightlightPageBtn.next().attr('class').indexOf('Pagination__numberBtn___3HrVf') != -1) {
+        nextPage = hightlightPageBtn.next().attr('href');
+        nowPage = nextPage;
+        await gotoNextPage(nextPage);
+        await parseHtml();
+    }
+
 }
 
-// 取得全部商品網址後，再從 json 檔中讀取每一頁網址，並且一個一個進入取得商品頁的其他詳細資訊
+// 取得全部商品網址後，開始針對個別商品取得更細節的規格資訊
+// 從 json 檔中讀取每一頁商品網址，並且一個一個進入取得商品頁讀取詳細資訊
 async function getData() {
     console.log('strat to read file...');
     //讀取 json 檔
@@ -143,25 +182,28 @@ async function getData() {
         const data2 = await parseDetail(data[i].herf);
 
         //分別把多張商品圖片網址、商品分類資訊、商品規格寫入到 data 
-        data[i]['pics'] = data2.pics;
-        data[i]['categoryString'] = data2.categoryString;
-        data[i]['productSpec'] = data2.productSpec;
+        arrLink[i]['pics'] = data2.pics;
+        arrLink[i]['categoryString'] = data2.categoryString;
+        arrLink[i]['productSpec'] = data2.productSpec;
 
-        //每讀取 1/100 存檔一次，避免檔案太大做白工
-        if (i % parseInt(data.length / 100) === 0) {
+        //每讀取 3 個商品存檔一次，避免檔案太大做白工
+        if (i % 3 === 0) {
             await writeJson();
         }
     }
 
-    //最後再存一次，確保資料完整性
+    // 最後結束前再存一次，確保資料完整性
     await writeJson();
 }
 
 // 爬取商品資訊頁的詳細資料
 async function parseDetail(url) {
-    let allData = {};
-    let picsArray = [];
     console.log('Ready to parse metadata/elements ...');
+    // 全部商品資料存在 allData
+    let allData = {};
+
+    // 將多張商品圖片存在 picsArray 陣列
+    let picsArray = [];
 
     //前往商品頁
     await nightmare
@@ -173,6 +215,7 @@ async function parseDetail(url) {
         return document.documentElement.innerHTML;
     });
 
+    // [開始取得商品多張圖片] //
     // 先確定所有商品圖片數量有多少
     let totalPics = $(html).find('div.ImageHover__thumbnailList___2NTr5 > span').length;
     console.log('totalPics=' + totalPics);
@@ -209,11 +252,11 @@ async function parseDetail(url) {
             categoryString += '>';
         }
     })
+
     //得到最終分類字串 categoryString，存到 allData 裡
     allData['categoryString'] = categoryString;
 
     // [開始取得商品規格文字] //
-
     //必須先捲動頁面到底部
     await scrollPage();
 
@@ -228,7 +271,7 @@ async function parseDetail(url) {
     // 取得網頁裡的商品資訊表格內容
     let allProductSpec = $(html).find('#detail > div > div:nth-child(3) > div > table > tbody > tr');
 
-    //針對表格內每一個 tr 內執行，將 th 的內容設定為 key，td 的內容設為 value 儲存在 productSpec
+    //針對表格內每一個 tr 內執行，將 th 的內容設定為 key 、 td 的內容設為 value 儲存在 productSpec
     allProductSpec.each(function (index, element) {
         productSpec[$(this).find('th').text()] = $(this).find('td').text();
     });
@@ -269,7 +312,7 @@ async function asyncArray(functionsList) {
 
 //主程式區域
 try {
-    asyncArray([searchKeyword, scrollPage, parseHtml, getData, close]).then(async () => {
+    asyncArray([searchKeyword, parseHtml, getData, close]).then(async () => {
         console.log('Done');
     });
 } catch (err) {
