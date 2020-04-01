@@ -1,5 +1,5 @@
-這資料夾是關於我 HTML + CSS 課程的練習作業
-1.利用 Basic73 版型來練習 Float 以及 clearfix 的使用，另外加了 reset.css，當時只是為了體驗使用 reset.css 的差異性測試。
+這資料夾是關於我 HTML + CSS 課程的練習作業：
+1.利用網路上 Basic73 版型來練習 Float 以及 clearfix 的使用，另外加了 reset.css，當時是為了體驗使用 reset.css 的差異性測試。
 網頁連結：
 https://easonliu0913.github.io/iiiproject/HTML%2BCSS/%E7%B7%B4%E7%BF%92float/Basic73%E6%A8%A1%E6%9D%BF/index.html
 
